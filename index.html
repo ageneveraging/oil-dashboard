@@ -636,6 +636,63 @@ nav {
   overflow: hidden;
 }
 
+.dashboard-embed-container {
+  position: relative;
+  width: 100%;
+  /* Iframe taller than container, container clips the PBI footer */
+  height: 560px;
+  overflow: hidden;
+}
+
+.dashboard-embed {
+  width: 100%;
+  /* Taller than container to push PBI footer out of view */
+  height: calc(100% + 52px);
+  border: none;
+  display: block;
+  background: #080C10;
+  /* Slight zoom to make content fill better & hide edge artifacts */
+  transform: scale(1.01);
+  transform-origin: top center;
+}
+
+/* Masker footer PBI - kotak hitam di bagian bawah container */
+.pbi-footer-mask {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  background: #080C10;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Garis dekoratif bawah biar transisi ke konten berikutnya mulus */
+.dashboard-embed-container::after {
+  content: '';
+  position: absolute;
+  bottom: 52px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  z-index: 11;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .dashboard-embed-container {
+    height: 320px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dashboard-embed-container {
+    height: 440px;
+  }
+}
+
 .dashboard-topbar {
   display: flex;
   align-items: center;
@@ -686,14 +743,6 @@ nav {
   border-radius: 50%;
   background: var(--accent2);
   animation: pulse 2s infinite;
-}
-
-.dashboard-embed {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border: none;
-  display: block;
-  background: var(--dark);
 }
 
 .dashboard-placeholder {
@@ -861,341 +910,6 @@ footer {
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-/* ── HAMBURGER ── */
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  width: 32px;
-  height: 32px;
-}
-
-.nav-hamburger span {
-  display: block;
-  width: 22px;
-  height: 1.5px;
-  background: var(--text2);
-  transition: all 0.3s;
-}
-
-.nav-hamburger.open span:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
-}
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
-}
-
-@media (max-width: 768px) {
-  .nav-hamburger { display: flex; }
-
-  .nav-links {
-    position: fixed;
-    top: 56px;
-    left: 0; right: 0;
-    background: rgba(8,12,16,0.97);
-    border-bottom: 1px solid var(--border);
-    flex-direction: column;
-    gap: 0;
-    padding: 8px 0;
-    display: none;
-    z-index: 99;
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-links.open { display: flex; }
-
-  .nav-links li a {
-    display: block;
-    padding: 14px 20px;
-    font-size: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .nav-links li:last-child a { border-bottom: none; }
-}
-
-/* ── PYTHON CODE SECTION ── */
-.code-section {
-  position: relative;
-  z-index: 1;
-  padding: 80px;
-}
-
-.code-block-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: 40px;
-}
-
-.code-block {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  position: relative;
-}
-
-.code-block-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 16px;
-  background: var(--dark);
-  border-bottom: 1px solid var(--border);
-}
-
-.code-block-title {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--accent2);
-  letter-spacing: 0.08em;
-}
-
-.code-block-lang {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text3);
-  background: rgba(0,212,255,0.07);
-  padding: 2px 8px;
-  border: 1px solid var(--border);
-}
-
-.code-block pre {
-  margin: 0;
-  padding: 20px;
-  overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 1.7;
-  color: var(--text);
-}
-
-.code-block code .kw  { color: #FF79C6; }
-.code-block code .fn  { color: #50FA7B; }
-.code-block code .st  { color: #F1FA8C; }
-.code-block code .cm  { color: var(--text3); font-style: italic; }
-.code-block code .nm  { color: var(--accent); }
-.code-block code .op  { color: #FF6B35; }
-.code-block code .nu  { color: #BD93F9; }
-
-/* ── MOBILE RESPONSIVE ── */
-@media (max-width: 768px) {
-
-  /* NAV */
-  nav {
-    padding: 0 16px;
-    height: 56px;
-    gap: 8px;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .nav-badge {
-    font-size: 9px;
-    padding: 3px 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 160px;
-  }
-
-  /* HERO */
-  .hero {
-    padding: 80px 20px 48px;
-    min-height: 100svh;
-  }
-
-  .hero-glow {
-    width: 300px;
-    height: 300px;
-    top: -50px;
-    right: -80px;
-  }
-
-  .hero-glow2 {
-    width: 200px;
-    height: 200px;
-    left: 0;
-  }
-
-  .hero-tag {
-    font-size: 9px;
-    letter-spacing: 0.08em;
-  }
-
-  .hero-desc {
-    font-size: 14px;
-    margin-bottom: 36px;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .btn-primary, .btn-secondary {
-    width: 100%;
-    justify-content: center;
-    padding: 13px 20px;
-  }
-
-  /* STATS BAR */
-  .stats-bar {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .stat-item {
-    padding: 16px 20px;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stat-item:nth-child(2) { border-right: none; }
-  .stat-item:nth-child(3) { border-bottom: none; }
-  .stat-item:nth-child(4) { border-right: none; border-bottom: none; }
-
-  .stat-value { font-size: 24px; }
-
-  /* SECTIONS */
-  .section,
-  .dashboard-section,
-  .code-section {
-    padding: 48px 20px;
-  }
-
-  /* ABOUT GRID */
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-bottom: 40px;
-  }
-
-  /* PARAM GRID */
-  .param-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  /* PIPELINE */
-  .pipeline {
-    flex-direction: column;
-    overflow-x: visible;
-    gap: 0;
-  }
-
-  .pipeline-step {
-    min-width: unset;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .pipeline-step:last-child { border-bottom: none; }
-
-  .pipeline-step:not(:last-child)::after {
-    content: '↓';
-    right: unset;
-    left: 50%;
-    top: unset;
-    bottom: -14px;
-    transform: translateX(-50%);
-    font-size: 16px;
-  }
-
-  /* METHOD GRID */
-  .method-grid {
-    grid-template-columns: 1fr;
-    overflow: visible;
-  }
-
-  .method-step {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 20px 16px;
-  }
-
-  .method-step:last-child { border-bottom: none; }
-
-  /* SECTION DIVIDER */
-  .section-divider { margin: 0 20px; }
-
-  /* DASHBOARD */
-  .dashboard-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .dashboard-meta { align-items: flex-start; }
-
-  .dashboard-embed {
-    aspect-ratio: unset;
-    height: 280px;
-  }
-
-  .db-url { font-size: 9px; }
-
-  /* CODE SECTION */
-  .code-block-wrapper {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .code-block pre {
-    font-size: 11px;
-  }
-
-  /* FOOTER */
-  footer {
-    grid-template-columns: 1fr;
-    padding: 32px 20px;
-    gap: 24px;
-  }
-
-  .footer-right {
-    align-items: flex-start;
-  }
-
-  .footer-copy { text-align: left; }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-
-  nav { padding: 0 24px; }
-  .nav-links { gap: 20px; }
-
-  .hero { padding: 100px 40px 60px; }
-
-  .section,
-  .dashboard-section,
-  .code-section { padding: 60px 40px; }
-
-  .about-grid { grid-template-columns: 1fr; }
-
-  .param-grid { grid-template-columns: repeat(2, 1fr); }
-
-  .method-grid { grid-template-columns: repeat(3, 1fr); }
-
-  .method-step:nth-child(3) { border-right: none; }
-  .method-step:nth-child(3),
-  .method-step:nth-child(4),
-  .method-step:nth-child(5),
-  .method-step:nth-child(6) { border-top: 1px solid var(--border); }
-
-  .section-divider { margin: 0 40px; }
-
-  footer { padding: 40px; }
-
-  .code-block-wrapper { grid-template-columns: 1fr; }
-}
 </style>
 </head>
 <body>
@@ -1206,17 +920,13 @@ footer {
     <div class="nav-logo-icon"></div>
     <span class="nav-logo-text">OIL<span>MONITOR</span></span>
   </div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about" onclick="closeNav()">Tentang</a></li>
-    <li><a href="#parameter" onclick="closeNav()">Parameter</a></li>
-    <li><a href="#dashboard" onclick="closeNav()">Dashboard</a></li>
-    <li><a href="#metodologi" onclick="closeNav()">Metodologi</a></li>
-    <li><a href="#python" onclick="closeNav()">Python</a></li>
+  <ul class="nav-links">
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#parameter">Parameter</a></li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#metodologi">Metodologi</a></li>
   </ul>
-  <div class="nav-badge">BSEE 2017–2024</div>
-  <button class="nav-hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-badge">BSEE GOF MEXICO 2017–2024</div>
 </nav>
 
 <!-- HERO -->
@@ -1438,16 +1148,15 @@ footer {
       <div class="db-status">LIVE</div>
     </div>
 
-    <!-- 
-      GANTI SRC DI BAWAH INI DENGAN LINK PUBLISH TO WEB DARI POWER BI-MU
-      Contoh: src="https://app.powerbi.com/view?r=XXXXXXXXXXXXXXXX"
-    -->
-    
-    <iframe class="dashboard-embed"
-      src="https://app.powerbi.com/view?r=eyJrIjoiYmE3NzlmMTgtNjZiZS00NzExLTk5NzgtY2U2MDRlYzczNDhmIiwidCI6IjUzNjhlMmNkLThmMjMtNDFkMS04M2E1LTU0MDE5MjIyMTRjMiJ9"
-      frameborder="0" 
-      allowFullScreen= "true"> 
-    </iframe>
+    <div class="dashboard-embed-container">
+      <iframe class="dashboard-embed"
+        src="https://app.powerbi.com/view?r=eyJrIjoiYmE3NzlmMTgtNjZiZS00NzExLTk5NzgtY2U2MDRlYzczNDhmIiwidCI6IjUzNjhlMmNkLThmMjMtNDFkMS04M2E1LTU0MDE5MjIyMTRjMiJ9"
+        frameborder="0"
+        allowFullScreen="true">
+      </iframe>
+      <!-- Overlay untuk sembunyikan footer Power BI -->
+      <div class="pbi-footer-mask"></div>
+    </div>
   </div>
 </section>
 
@@ -1492,95 +1201,6 @@ footer {
   </div>
 </section>
 
-<div class="section-divider"></div>
-
-<!-- PYTHON CODE SECTION -->
-<section class="code-section" id="python">
-  <div class="section-tag">// DATA PIPELINE — SOURCE CODE</div>
-  <h2 class="section-title reveal">Python Data Processing<br><span style="color:var(--accent)">Script</span></h2>
-  <p style="font-size:14px;color:var(--text2);max-width:560px;line-height:1.8;margin-bottom:0;" class="reveal">
-    Berikut adalah potongan kode Python yang digunakan untuk mengunduh, mengekstrak, menggabungkan, dan membersihkan data BSEE OGOR-A sebelum disimpan ke database SQLite.
-  </p>
-
-  <div class="code-block-wrapper reveal">
-
-    <div class="code-block">
-      <div class="code-block-header">
-        <span class="code-block-title">📂 extract_combine.py</span>
-        <span class="code-block-lang">PYTHON</span>
-      </div>
-      <pre><code><span class="cm"># ── Step 1–3: Extract ZIP & Combine ────────────</span>
-<span class="kw">import</span> zipfile, os
-<span class="kw">import</span> pandas <span class="kw">as</span> pd
-
-zip_files = [
-    <span class="st">"OGOR-A_2017.zip"</span>, <span class="st">"OGOR-A_2018.zip"</span>,
-    <span class="st">"OGOR-A_2019.zip"</span>, <span class="st">"OGOR-A_2020.zip"</span>,
-    <span class="st">"OGOR-A_2021.zip"</span>, <span class="st">"OGOR-A_2022.zip"</span>,
-    <span class="st">"OGOR-A_2023.zip"</span>, <span class="st">"OGOR-A_2024.zip"</span>,
-]
-
-dataframes = []
-<span class="kw">for</span> zf <span class="kw">in</span> zip_files:
-    <span class="kw">with</span> zipfile.<span class="fn">ZipFile</span>(zf, <span class="st">'r'</span>) <span class="kw">as</span> z:
-        z.<span class="fn">extractall</span>(<span class="st">"raw/"</span>)
-    txt = zf.<span class="fn">replace</span>(<span class="st">".zip"</span>, <span class="st">".txt"</span>)
-    df = pd.<span class="fn">read_csv</span>(
-        <span class="nm">f</span><span class="st">"raw/{txt}"</span>,
-        sep=<span class="st">"|"</span>, encoding=<span class="st">"latin-1"</span>,
-        low_memory=<span class="nm">False</span>
-    )
-    dataframes.<span class="fn">append</span>(df)
-
-<span class="cm"># Gabungkan semua tahun → 722.708 baris</span>
-raw_df = pd.<span class="fn">concat</span>(dataframes, ignore_index=<span class="nm">True</span>)
-<span class="fn">print</span>(<span class="nm">f</span><span class="st">"Total raw records: {<span class="nm">len</span>(raw_df):,}"</span>)
-</code></pre>
-    </div>
-
-    <div class="code-block">
-      <div class="code-block-header">
-        <span class="code-block-title">🧹 clean_store.py</span>
-        <span class="code-block-lang">PYTHON</span>
-      </div>
-      <pre><code><span class="cm"># ── Step 4–5: Cleaning & Store to SQLite ───────</span>
-<span class="kw">import</span> sqlite3
-
-<span class="cm"># Drop duplikasi & nilai kosong kritis</span>
-df = raw_df.<span class="fn">drop_duplicates</span>()
-df = df.<span class="fn">dropna</span>(subset=[
-    <span class="st">"BSEE_COMPANY_NUM"</span>, <span class="st">"LEASE_NUMBER"</span>,
-    <span class="st">"PRODUCTION_DATE"</span>, <span class="st">"OIL_BBL"</span>
-])
-
-<span class="cm"># Kalkulasi Water Cut & GOR</span>
-df[<span class="st">"WATER_CUT"</span>] = (
-    df[<span class="st">"WATER_BBL"</span>] /
-    (df[<span class="st">"WATER_BBL"</span>] + df[<span class="st">"OIL_BBL"</span>])
-) <span class="op">*</span> <span class="nu">100</span>
-
-df[<span class="st">"GOR"</span>] = (
-    df[<span class="st">"GAS_MCF"</span>] / df[<span class="st">"OIL_BBL"</span>]
-).<span class="fn">replace</span>([<span class="nm">float</span>(<span class="st">'inf'</span>)], <span class="nm">None</span>)
-
-<span class="cm"># Filter → 332.148 record bersih</span>
-df = df[df[<span class="st">"OIL_BBL"</span>] <span class="op">></span> <span class="nu">0</span>]
-<span class="fn">print</span>(<span class="nm">f</span><span class="st">"Clean records: {<span class="nm">len</span>(df):,}"</span>)
-
-<span class="cm"># Simpan ke SQLite</span>
-conn = sqlite3.<span class="fn">connect</span>(<span class="st">"bsee_production.db"</span>)
-df.<span class="fn">to_sql</span>(
-    <span class="st">"production"</span>, conn,
-    if_exists=<span class="st">"replace"</span>, index=<span class="nm">False</span>
-)
-conn.<span class="fn">close</span>()
-<span class="fn">print</span>(<span class="st">"✅ Data saved to bsee_production.db"</span>)
-</code></pre>
-    </div>
-
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="footer-left">
@@ -1604,18 +1224,6 @@ conn.<span class="fn">close</span>()
 </footer>
 
 <script>
-// Hamburger menu
-function toggleNav() {
-  const nav = document.getElementById('navLinks');
-  const btn = document.getElementById('hamburger');
-  nav.classList.toggle('open');
-  btn.classList.toggle('open');
-}
-function closeNav() {
-  document.getElementById('navLinks').classList.remove('open');
-  document.getElementById('hamburger').classList.remove('open');
-}
-
 // Scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
