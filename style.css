@@ -356,7 +356,7 @@ nav {
 .pbi-footer-mask {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 16px;
+  height: 36px;
   background: #080C10;
   z-index: 10;
   pointer-events: none;
@@ -430,7 +430,7 @@ footer {
   .method-step:nth-child(5) { border-top: 1px solid var(--border); }
   .method-step:nth-child(6) { border-top: 1px solid var(--border); border-right: none; }
   .dashboard-label { padding: 48px 40px 24px; }
-  .dashboard-embed-wrap { height: 480px; }
+  .dashboard-embed-wrap { height: 680px; }
   .dashboard-embed-wrap iframe { height: 720px; }
   footer { padding: 40px; }
 }
