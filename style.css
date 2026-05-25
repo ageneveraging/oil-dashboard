@@ -323,7 +323,7 @@ nav {
   width: 100vw;
   left: 50%;
   margin-left: -50vw;
-  height: 660px;
+  height: calc(100vh - 60px); /* 60px = tinggi navbar */
   overflow: hidden;
   background: #080C10;
   touch-action: pan-y;
@@ -332,10 +332,10 @@ nav {
 /* Iframe: full 720px canvas PBI, digeser -48px buat sembunyiin header PBI */
 .dashboard-embed-wrap iframe {
   position: absolute;
-  top: -44px;
+  top: -48px;
   left: 0;
   width: 100%;
-  height: 720px;
+  height: calc(100vh - 60px + 128px); /* +128px nutup header+footer PBI */
   border: none;
   background: #080C10;
   pointer-events: auto;
