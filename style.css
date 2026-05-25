@@ -356,10 +356,12 @@ nav {
 /* mask bawah — nutupin footer PBI */
 .pbi-footer-mask {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 56px;
-  background: #080C10;
-  z-index: 10;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px; /* coba naikin terus sampai footer PBI hilang */
+  background: #080C10; /* harus sama persis sama background PBI kamu */
+  z-index: 20;
   pointer-events: none;
 }
 
