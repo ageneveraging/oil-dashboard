@@ -328,15 +328,43 @@ nav {
   width: 100vw;
   left: 50%; right: 50%;
   margin-left: -50vw; margin-right: -50vw;
-  height: 600px; overflow: hidden; background: #080C10;
+  /* tinggi container = tinggi yang keliatan user */
+  height: 720px;
+  overflow: hidden;
+  background: #080C10;
 }
+
 .dashboard-embed-wrap iframe {
-  width: 100%; height: calc(100% + 52px);
-  border: none; display: block; background: #080C10;
+  width: 100%;
+  /* iframe lebih tinggi dari container:
+     +56px nutup footer PBI bawah
+     +48px nutup header back-button PBI atas */
+  height: calc(100% + 56px + 48px);
+  border: none;
+  display: block;
+  background: #080C10;
+  /* geser ke atas buat sembunyiin header PBI */
+  margin-top: -48px;
 }
+
+/* mask atas — nutupin back button & header PBI */
+.pbi-header-mask {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 48px;
+  background: #080C10;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* mask bawah — nutupin footer PBI */
 .pbi-footer-mask {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 52px; background: #080C10; z-index: 10; pointer-events: none;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: #080C10;
+  z-index: 10;
+  pointer-events: none;
 }
 
 /* ── METODOLOGI ── */
@@ -414,7 +442,7 @@ footer {
   .method-step:nth-child(6) { border-top: 1px solid var(--border); border-right: none; }
 
   .dashboard-label { padding: 48px 40px 24px; }
-  .dashboard-embed-wrap { height: 480px; }
+  .dashboard-embed-wrap { height: 560px; }
 
   footer { padding: 40px; }
 }
@@ -480,7 +508,7 @@ footer {
   .dashboard-meta { align-items: flex-start; }
   .dashboard-topbar { padding: 8px 16px; }
   .db-url { font-size: 9px; }
-  .dashboard-embed-wrap { height: 300px; }
+  .dashboard-embed-wrap { height: 420px; }
 
   /* Metodologi — 1 kolom */
   .method-grid {
@@ -516,7 +544,32 @@ footer {
 
   .hero-title { font-size: clamp(32px, 11vw, 48px); }
 
-  .dashboard-embed-wrap { height: 260px; }
+  .dashboard-embed-wrap { height: 360px; }
 
   .param-name { font-size: 17px; }
+}
+
+
+/* ── FIX IFRAME PBI SCROLL / ZOOM ── */
+.dashboard-embed-wrap {
+  touch-action: none;
+  -ms-touch-action: none;
+}
+
+.dashboard-embed-wrap iframe {
+  pointer-events: auto;
+  touch-action: pan-x pan-y;
+  -ms-touch-action: pan-x pan-y;
+  transform: scale(1) !important;
+  transform-origin: top left !important;
+}
+
+/* Overlay transparan di atas iframe — nangkep scroll luar,
+   tap/klik tetap tembus ke iframe */
+.dashboard-embed-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
 }
