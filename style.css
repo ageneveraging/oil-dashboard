@@ -17,10 +17,11 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { 
+
+html {
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
-     }
+}
 
 body {
   background: var(--black);
@@ -278,7 +279,12 @@ nav {
 }
 
 /* ── DASHBOARD SECTION ── */
-.dashboard-section { position: relative; z-index: 1; padding: 0; margin: 0; scroll-snap-align: start; }
+.dashboard-section {
+  position: relative;
+  z-index: 1;
+  padding: 0; margin: 0;
+  scroll-snap-align: start;
+}
 .dashboard-label { padding: 60px 80px 28px; }
 .dashboard-tag {
   font-family: var(--font-mono); font-size: 11px;
@@ -320,47 +326,40 @@ nav {
   background: var(--accent2); animation: pulse 2s infinite;
 }
 
-/* ── IFRAME EMBED ── */
-/* Container: lebar penuh viewport, tinggi = 720 - 48(header) - 80(footer) = 592px */
+/* ── IFRAME EMBED — full viewport minus navbar ── */
 .dashboard-embed-wrap {
   position: relative;
   width: 100vw;
   left: 50%;
   margin-left: -50vw;
-  height: calc(100vh - 60px); /* 60px = tinggi navbar */
+  height: calc(100vh - 60px);
   overflow: hidden;
   background: #080C10;
   touch-action: pan-y;
 }
-
-/* Iframe: full 720px canvas PBI, digeser -48px buat sembunyiin header PBI */
 .dashboard-embed-wrap iframe {
   position: absolute;
   top: -48px;
   left: 0;
   width: 100%;
-  height: calc(100vh - 60px + 128px); /* +128px nutup header+footer PBI */
+  height: calc(100vh - 60px + 128px);
   border: none;
   background: #080C10;
   pointer-events: auto;
   touch-action: pan-x pan-y;
 }
-
-/* Mask atas: nutupin header/back button PBI (48px) */
 .pbi-header-mask {
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 44px;
+  height: 48px;
   background: #080C10;
   z-index: 10;
   pointer-events: none;
 }
-
-/* Mask bawah: nutupin footer PBI (80px) */
 .pbi-footer-mask {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 36px;
+  height: 80px;
   background: #080C10;
   z-index: 10;
   pointer-events: none;
@@ -411,7 +410,6 @@ footer {
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-
 /* ════════════════════════════════════════
    RESPONSIVE — TABLET (max 1024px)
 ════════════════════════════════════════ */
@@ -430,12 +428,9 @@ footer {
   .param-grid { grid-template-columns: repeat(2, 1fr); }
   .method-grid { grid-template-columns: repeat(3, 1fr); }
   .method-step:nth-child(3) { border-right: none; }
-  .method-step:nth-child(4),
-  .method-step:nth-child(5) { border-top: 1px solid var(--border); }
+  .method-step:nth-child(4), .method-step:nth-child(5) { border-top: 1px solid var(--border); }
   .method-step:nth-child(6) { border-top: 1px solid var(--border); border-right: none; }
   .dashboard-label { padding: 48px 40px 24px; }
-  .dashboard-embed-wrap { height: 680px; }
-  .dashboard-embed-wrap iframe { height: 720px; }
   footer { padding: 40px; }
 }
 
@@ -477,8 +472,6 @@ footer {
   .dashboard-meta { align-items: flex-start; }
   .dashboard-topbar { padding: 8px 16px; }
   .db-url { font-size: 9px; }
-  .dashboard-embed-wrap { height: 360px; }
-  .dashboard-embed-wrap iframe { height: 720px; }
   .method-grid { grid-template-columns: 1fr; border: none; gap: 1px; background: var(--border); }
   .method-step { border: 1px solid var(--border); border-right: 1px solid var(--border) !important; border-top: none !important; padding: 20px 16px; }
   .method-step:first-child { border-top: 1px solid var(--border) !important; }
@@ -495,7 +488,5 @@ footer {
   .stat-item { border-right: none !important; border-bottom: 1px solid var(--border); }
   .stat-item:last-child { border-bottom: none; }
   .hero-title { font-size: clamp(32px, 11vw, 48px); }
-  .dashboard-embed-wrap { height: 260px; }
-  .dashboard-embed-wrap iframe { height: 720px; }
   .param-name { font-size: 17px; }
 }
