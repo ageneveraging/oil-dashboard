@@ -326,29 +326,21 @@ nav {
 .dashboard-embed-wrap {
   position: relative;
   width: 100vw;
-  left: 50%; right: 50%;
-  margin-left: -50vw; margin-right: -50vw;
-  /* tinggi container = tinggi yang keliatan user */
-  height: 0;
-  padding-bottom: 56.25%; /* 16:9 = 720/1280 */
+  left: 50%;
+  margin-left: -50vw;
+  height: 100vh;
   overflow: hidden;
   background: #080C10;
 }
 
 .dashboard-embed-wrap iframe {
-  width: 100%;
-  /* iframe lebih tinggi dari container:
-     +56px nutup footer PBI bawah
-     +48px nutup header back-button PBI atas */
-  height: calc(100% + 56px + 48px);
-  border: none;
-  display: block;
-  background: #080C10;
-  /* geser ke atas buat sembunyiin header PBI */
   position: absolute;
-  top: -48px
+  top: -48px;
   left: 0;
-  height: calc (100% + 56px + 48px);
+  width: 100%;
+  height: calc(100% + 104px);
+  border: none;
+  background: #080C10;
 }
 
 /* mask atas — nutupin back button & header PBI */
