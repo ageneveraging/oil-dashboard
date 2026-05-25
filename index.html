@@ -218,6 +218,7 @@
     <div class="db-status">LIVE</div>
   </div>
   <div class="dashboard-embed-wrap">
+    <div class="pbi-header-mask"></div>
     <iframe
       src="https://app.powerbi.com/view?r=eyJrIjoiYmE3NzlmMTgtNjZiZS00NzExLTk5NzgtY2U2MDRlYzczNDhmIiwidCI6IjUzNjhlMmNkLThmMjMtNDFkMS04M2E1LTU0MDE5MjIyMTRjMiJ9"
       frameborder="0"
@@ -307,5 +308,39 @@ window.addEventListener('scroll', () => {
   });
 });
 </script>
+
+<script>
+// Fix PBI iframe scroll — prevent pinch zoom & scroll hijack
+(function() {
+  var wrap = document.querySelector('.dashboard-embed-wrap');
+  if (!wrap) return;
+
+  // Prevent wheel zoom (ctrl+scroll)
+  wrap.addEventListener('wheel', function(e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, { passive: false });
+
+  // Prevent pinch zoom on touch
+  wrap.addEventListener('touchstart', function(e) {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  wrap.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  // Prevent gesturechange (Safari)
+  wrap.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+  wrap.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+})();
+</script>
+
 </body>
 </html>
