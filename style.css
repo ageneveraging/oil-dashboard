@@ -71,9 +71,7 @@ nav {
   letter-spacing: 0.1em; color: var(--white);
 }
 .nav-logo-text span { color: var(--accent); }
-.nav-links {
-  display: flex; align-items: center; gap: 24px; list-style: none;
-}
+.nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
 .nav-links a {
   font-family: var(--font-mono); font-size: 12px;
   color: var(--text2); text-decoration: none;
@@ -202,10 +200,7 @@ nav {
 }
 
 /* ── ABOUT ── */
-.about-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 40px; margin-bottom: 60px;
-}
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
 .about-text p { font-size: 15px; line-height: 1.9; color: var(--text2); margin-bottom: 20px; }
 .about-text p strong { color: var(--white); font-weight: 500; }
 .info-cards { display: flex; flex-direction: column; gap: 12px; }
@@ -227,10 +222,7 @@ nav {
 .info-card-text { font-family: var(--font-mono); font-size: 11px; color: var(--text2); line-height: 1.6; }
 
 /* ── PARAMETER ── */
-.param-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 16px; margin-bottom: 60px;
-}
+.param-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 60px; }
 .param-card {
   background: var(--panel); border: 1px solid var(--border);
   padding: 28px 24px; position: relative; overflow: hidden; transition: all 0.3s;
@@ -323,27 +315,34 @@ nav {
   content: ''; width: 6px; height: 6px; border-radius: 50%;
   background: var(--accent2); animation: pulse 2s infinite;
 }
+
+/* ── IFRAME EMBED ── */
+/* Container: lebar penuh viewport, tinggi = 720 - 48(header) - 80(footer) = 592px */
 .dashboard-embed-wrap {
   position: relative;
   width: 100vw;
   left: 50%;
   margin-left: -50vw;
-  height: 100vh;
+  height: 592px;
   overflow: hidden;
   background: #080C10;
+  touch-action: pan-y;
 }
 
+/* Iframe: full 720px canvas PBI, digeser -48px buat sembunyiin header PBI */
 .dashboard-embed-wrap iframe {
   position: absolute;
   top: -48px;
   left: 0;
   width: 100%;
-  height: calc(100% + 104px);
+  height: 720px;
   border: none;
   background: #080C10;
+  pointer-events: auto;
+  touch-action: pan-x pan-y;
 }
 
-/* mask atas — nutupin back button & header PBI */
+/* Mask atas: nutupin header/back button PBI (48px) */
 .pbi-header-mask {
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -353,15 +352,13 @@ nav {
   pointer-events: none;
 }
 
-/* mask bawah — nutupin footer PBI */
+/* Mask bawah: nutupin footer PBI (80px) */
 .pbi-footer-mask {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 80px; /* coba naikin terus sampai footer PBI hilang */
-  background: #080C10; /* harus sama persis sama background PBI kamu */
-  z-index: 20;
+  bottom: 0; left: 0; right: 0;
+  height: 80px;
+  background: #080C10;
+  z-index: 10;
   pointer-events: none;
 }
 
@@ -418,119 +415,73 @@ footer {
   nav { padding: 0 24px; }
   .nav-badge { display: none; }
   .nav-links { gap: 16px; }
-
   .hero { padding: 90px 40px 50px; }
-
   .stats-bar { grid-template-columns: repeat(2, 1fr); }
   .stat-item:nth-child(2) { border-right: none; }
   .stat-item:nth-child(3) { border-top: 1px solid var(--border); }
   .stat-item:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
-
   .section { padding: 60px 40px; }
   .section-divider { margin: 0 40px; }
-
   .about-grid { grid-template-columns: 1fr; gap: 32px; }
-
   .param-grid { grid-template-columns: repeat(2, 1fr); }
-
   .method-grid { grid-template-columns: repeat(3, 1fr); }
   .method-step:nth-child(3) { border-right: none; }
   .method-step:nth-child(4),
   .method-step:nth-child(5) { border-top: 1px solid var(--border); }
   .method-step:nth-child(6) { border-top: 1px solid var(--border); border-right: none; }
-
   .dashboard-label { padding: 48px 40px 24px; }
-  .dashboard-embed-wrap { height: 560px; }
-
+  .dashboard-embed-wrap { height: 480px; }
+  .dashboard-embed-wrap iframe { height: 720px; }
   footer { padding: 40px; }
 }
-
 
 /* ════════════════════════════════════════
    RESPONSIVE — MOBILE (max 768px)
 ════════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Nav */
-  nav {
-    padding: 0 16px;
-    height: 52px;
-    gap: 8px;
-  }
+  nav { padding: 0 16px; height: 52px; gap: 8px; }
   .nav-links { display: none; }
   .nav-badge { display: none; }
   .nav-logo-text { font-size: 14px; }
-
-  /* Hero */
   .hero { padding: 80px 20px 40px; min-height: auto; }
-  .hero-tag {
-    font-size: 9px; letter-spacing: 0.1em;
-    flex-wrap: wrap; gap: 6px;
-  }
+  .hero-tag { font-size: 9px; letter-spacing: 0.1em; flex-wrap: wrap; gap: 6px; }
   .hero-tag::before { display: none; }
   .hero-title { font-size: clamp(36px, 10vw, 56px); }
   .hero-subtitle { font-size: clamp(16px, 4vw, 22px); }
   .hero-desc { font-size: 14px; margin-bottom: 32px; }
   .hero-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
   .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
-
-  /* Stats bar — 1 kolom */
   .stats-bar { grid-template-columns: 1fr 1fr; }
   .stat-item { padding: 16px 20px; border-right: none; border-bottom: 1px solid var(--border); }
   .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
   .stat-item:last-child { border-bottom: none; }
   .stat-item:nth-child(3) { border-bottom: none; }
   .stat-value { font-size: 24px; }
-
-  /* Sections */
   .section { padding: 48px 20px; }
   .section-title { margin-bottom: 28px; }
   .section-divider { margin: 0 20px; }
-
-  /* About */
   .about-grid { grid-template-columns: 1fr; gap: 24px; margin-bottom: 32px; }
   .about-text p { font-size: 14px; }
-
-  /* Param grid — 1 kolom */
   .param-grid { grid-template-columns: 1fr; gap: 12px; margin-bottom: 40px; }
   .param-card { padding: 20px; }
   .param-card:hover { transform: none; }
-
-  /* Pipeline — horizontal scroll tetap, tapi lebih kecil */
   .pipeline { gap: 0; margin-bottom: 40px; }
   .pipeline-step { min-width: 120px; padding: 16px 14px; }
   .pipeline-name { font-size: 13px; }
-
-  /* Dashboard */
   .dashboard-label { padding: 40px 20px 20px; }
   .dashboard-header { flex-direction: column; align-items: flex-start; gap: 16px; }
   .dashboard-meta { align-items: flex-start; }
   .dashboard-topbar { padding: 8px 16px; }
   .db-url { font-size: 9px; }
-  .dashboard-embed-wrap { height: 420px; }
-
-  /* Metodologi — 1 kolom */
-  .method-grid {
-    grid-template-columns: 1fr;
-    border: none; gap: 1px;
-    background: var(--border);
-  }
-  .method-step {
-    border: 1px solid var(--border);
-    border-right: 1px solid var(--border) !important;
-    border-top: none !important;
-    padding: 20px 16px;
-  }
+  .dashboard-embed-wrap { height: 360px; }
+  .dashboard-embed-wrap iframe { height: 720px; }
+  .method-grid { grid-template-columns: 1fr; border: none; gap: 1px; background: var(--border); }
+  .method-step { border: 1px solid var(--border); border-right: 1px solid var(--border) !important; border-top: none !important; padding: 20px 16px; }
   .method-step:first-child { border-top: 1px solid var(--border) !important; }
-
-  /* Footer */
-  footer {
-    grid-template-columns: 1fr;
-    padding: 32px 20px; gap: 24px;
-  }
+  footer { grid-template-columns: 1fr; padding: 32px 20px; gap: 24px; }
   .footer-right { align-items: flex-start; }
   .footer-copy { text-align: left; }
 }
-
 
 /* ════════════════════════════════════════
    RESPONSIVE — SMALL MOBILE (max 480px)
@@ -539,36 +490,8 @@ footer {
   .stats-bar { grid-template-columns: 1fr; }
   .stat-item { border-right: none !important; border-bottom: 1px solid var(--border); }
   .stat-item:last-child { border-bottom: none; }
-
   .hero-title { font-size: clamp(32px, 11vw, 48px); }
-
-  .dashboard-embed-wrap { height: 360px; }
-
+  .dashboard-embed-wrap { height: 260px; }
+  .dashboard-embed-wrap iframe { height: 720px; }
   .param-name { font-size: 17px; }
-}
-
-
-/* ── FIX IFRAME PBI SCROLL / ZOOM ── */
-.dashboard-embed-wrap {
-  touch-action: none;
-  -ms-touch-action: none;
-}
-
-.dashboard-embed-wrap iframe {
-  pointer-events: auto;
-  touch-action: pan-x pan-y;
-  -ms-touch-action: pan-x pan-y;
-  transform: scale(1.15);
-transform-origin: top left;
-width: calc(100% / 1.15);
-height: calc(100% / 1.15);
-
-/* Overlay transparan di atas iframe — nangkep scroll luar,
-   tap/klik tetap tembus ke iframe */
-.dashboard-embed-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
 }
