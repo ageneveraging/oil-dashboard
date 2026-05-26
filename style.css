@@ -328,41 +328,100 @@ nav {
 
 /* ── IFRAME EMBED — full viewport minus navbar ── */
 .dashboard-embed-wrap {
+
   position: relative;
-  width: 100vw;
-  left: 50%;
-  margin-left: -50vw;
-  height: calc(100vh - 60px);
+
+  width: calc(100% - 160px);
+
+  margin: 0 auto;
+
+  height: 92vh;
+
+  min-height: 920px;
+
   overflow: hidden;
+
   background: #080C10;
-  touch-action: pan-y;
+
+  border: 1px solid var(--border);
+
+  border-top: none;
+
+  border-radius: 0 0 24px 24px;
+
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.45),
+    inset 0 0 0 1px rgba(255,255,255,.02);
+
 }
+
 .dashboard-embed-wrap iframe {
-  position: absolute;
-  top: -48px;
-  left: 0;
+
   width: 100%;
-  height: calc(100vh - 60px + 128px);
+
+  height: 100%;
+
   border: none;
+
+  display: block;
+
   background: #080C10;
-  pointer-events: auto;
-  touch-action: pan-x pan-y;
+
 }
-.pbi-header-mask {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 48px;
-  background: #080C10;
-  z-index: 10;
-  pointer-events: none;
-}
+
+/* MASK DIMATIKAN */
+
+.pbi-header-mask,
 .pbi-footer-mask {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 80px;
-  background: #080C10;
-  z-index: 10;
-  pointer-events: none;
+  display: none;
+}
+
+/* TABLET */
+
+@media (max-width: 1024px) {
+
+  .dashboard-embed-wrap {
+
+    width: calc(100% - 80px);
+
+    height: 84vh;
+
+    min-height: 760px;
+
+  }
+
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+  .dashboard-embed-wrap {
+
+    width: calc(100% - 40px);
+
+    height: 72vh;
+
+    min-height: 560px;
+
+    border-radius: 0 0 18px 18px;
+
+  }
+
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 480px) {
+
+  .dashboard-embed-wrap {
+
+    height: 68vh;
+
+    min-height: 500px;
+
+  }
+
 }
 
 /* ── METODOLOGI ── */
