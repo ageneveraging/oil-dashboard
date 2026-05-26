@@ -3,576 +3,359 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>BSEE Gulf of Mexico — Oil Production Monitoring Dashboard</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="style.css">
-
-<style>
-
-/* =========================================
-   RESET
-========================================= */
-
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  background:#06131f;
-  color:#fff;
-  font-family:'IBM Plex Sans', sans-serif;
-  overflow-x:hidden;
-}
-
-/* =========================================
-   NAVBAR
-========================================= */
-
-nav{
-  width:100%;
-  height:80px;
-  padding:0 60px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:999;
-  background:rgba(5,12,20,.9);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,.05);
-}
-
-.nav-logo{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.nav-logo-icon{
-  width:20px;
-  height:20px;
-  background:#00d9ff;
-  clip-path:polygon(50% 0%, 100% 100%, 0% 100%);
-}
-
-.nav-logo-text{
-  font-family:'Rajdhani', sans-serif;
-  font-weight:700;
-  letter-spacing:2px;
-}
-
-.nav-logo-text span{
-  color:#00d9ff;
-}
-
-.nav-links{
-  display:flex;
-  gap:30px;
-  list-style:none;
-}
-
-.nav-links a{
-  text-decoration:none;
-  color:#c8d7e6;
-  font-size:14px;
-  transition:.3s;
-}
-
-.nav-links a:hover{
-  color:#00d9ff;
-}
-
-.nav-badge{
-  padding:10px 16px;
-  border:1px solid rgba(0,217,255,.3);
-  border-radius:10px;
-  font-size:12px;
-  color:#00d9ff;
-}
-
-/* =========================================
-   HERO
-========================================= */
-
-.hero{
-  min-height:100vh;
-  padding:180px 60px 120px;
-  position:relative;
-}
-
-.hero-tag{
-  color:#00d9ff;
-  font-size:12px;
-  letter-spacing:2px;
-  margin-bottom:24px;
-}
-
-.hero-title{
-  font-family:'Rajdhani', sans-serif;
-  font-size:100px;
-  line-height:.95;
-  font-weight:700;
-}
-
-.accent{
-  color:#00d9ff;
-}
-
-.accent2{
-  color:#57f0ff;
-}
-
-.hero-subtitle{
-  margin-top:28px;
-  font-size:24px;
-  color:#b6c5d4;
-}
-
-.hero-desc{
-  margin-top:20px;
-  max-width:760px;
-  line-height:1.8;
-  color:#9fb0c0;
-}
-
-.hero-actions{
-  margin-top:40px;
-  display:flex;
-  gap:20px;
-}
-
-.btn-primary,
-.btn-secondary{
-  padding:16px 24px;
-  border-radius:14px;
-  text-decoration:none;
-  transition:.3s;
-}
-
-.btn-primary{
-  background:#00d9ff;
-  color:#06131f;
-  font-weight:600;
-}
-
-.btn-primary:hover{
-  transform:translateY(-2px);
-}
-
-.btn-secondary{
-  border:1px solid rgba(255,255,255,.12);
-  color:#fff;
-}
-
-/* =========================================
-   SECTION
-========================================= */
-
-.section{
-  padding:120px 60px;
-}
-
-.section-tag{
-  color:#00d9ff;
-  font-size:12px;
-  letter-spacing:2px;
-  margin-bottom:24px;
-}
-
-.section-title{
-  font-family:'Rajdhani', sans-serif;
-  font-size:56px;
-  margin-bottom:50px;
-}
-
-/* =========================================
-   DASHBOARD
-========================================= */
-
-.dashboard-section{
-  padding:120px 60px;
-}
-
-.dashboard-topbar{
-  width:100%;
-  height:54px;
-  background:#081522;
-  border:1px solid rgba(255,255,255,.05);
-  border-bottom:none;
-  border-radius:24px 24px 0 0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 20px;
-}
-
-.db-dots{
-  display:flex;
-  gap:8px;
-}
-
-.db-dot{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:#ff5f56;
-}
-
-.db-dot:nth-child(2){
-  background:#ffbd2e;
-}
-
-.db-dot:nth-child(3){
-  background:#27c93f;
-}
-
-.db-url{
-  font-size:13px;
-  color:#8ea4b7;
-}
-
-.db-url span{
-  color:#00d9ff;
-}
-
-.db-status{
-  color:#00ff95;
-  font-size:12px;
-}
-
-.dashboard-embed-wrap{
-  width:100%;
-  height:92vh;
-  min-height:950px;
-  overflow:hidden;
-  border-radius:0 0 24px 24px;
-  border:1px solid rgba(255,255,255,.05);
-  background:#071521;
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
-}
-
-.dashboard-embed-wrap iframe{
-  width:100%;
-  height:100%;
-  border:none;
-  display:block;
-}
-
-/* =========================================
-   FOOTER
-========================================= */
-
-footer{
-  padding:80px 60px;
-  border-top:1px solid rgba(255,255,255,.05);
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:40px;
-}
-
-.footer-title{
-  font-size:24px;
-  margin-bottom:16px;
-  font-family:'Rajdhani', sans-serif;
-}
-
-.footer-text{
-  color:#9fb0c0;
-  line-height:1.8;
-}
-
-.footer-badge{
-  margin-bottom:10px;
-  color:#00d9ff;
-}
-
-/* =========================================
-   RESPONSIVE
-========================================= */
-
-@media(max-width:1200px){
-
-  .hero-title{
-    font-size:80px;
-  }
-
-  .dashboard-embed-wrap{
-    min-height:850px;
-  }
-
-}
-
-@media(max-width:992px){
-
-  nav{
-    padding:0 30px;
-  }
-
-  .hero,
-  .section,
-  .dashboard-section,
-  footer{
-    padding-left:30px;
-    padding-right:30px;
-  }
-
-  .hero-title{
-    font-size:64px;
-  }
-
-  .section-title{
-    font-size:42px;
-  }
-
-  .dashboard-embed-wrap{
-    height:80vh;
-    min-height:700px;
-  }
-
-}
-
-@media(max-width:768px){
-
-  .nav-links{
-    display:none;
-  }
-
-  .hero{
-    padding-top:140px;
-  }
-
-  .hero-title{
-    font-size:48px;
-  }
-
-  .hero-actions{
-    flex-direction:column;
-  }
-
-  .dashboard-embed-wrap{
-    height:70vh;
-    min-height:550px;
-  }
-
-}
-
-</style>
-
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-
 <nav>
-
   <div class="nav-logo">
     <div class="nav-logo-icon"></div>
-    <span class="nav-logo-text">
-      OIL<span>MONITOR</span>
-    </span>
+    <span class="nav-logo-text">OIL<span>MONITOR</span></span>
   </div>
-
   <ul class="nav-links">
     <li><a href="#about">Tentang</a></li>
+    <li><a href="#parameter">Parameter</a></li>
     <li><a href="#dashboard">Dashboard</a></li>
     <li><a href="#metodologi">Metodologi</a></li>
   </ul>
-
-  <div class="nav-badge">
-    BSEE GOF MEXICO 2017–2024
-  </div>
-
+  <div class="nav-badge">BSEE GOF MEXICO 2017–2024</div>
 </nav>
 
-<!-- HERO -->
-
 <section class="hero">
-
-  <div class="hero-tag">
-    PENULISAN ILMIAH — SISTEM INFORMASI — UNIVERSITAS GUNADARMA 2026
-  </div>
-
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-tag">PENULISAN ILMIAH — SISTEM INFORMASI — UNIVERSITAS GUNADARMA 2026</div>
   <h1 class="hero-title">
     MONITORING<br>
     <span class="accent">PRODUKSI</span><br>
     <span class="accent2">MINYAK</span>
   </h1>
-
-  <p class="hero-subtitle">
-    Berbasis Dashboard Analitik — Gulf of Mexico
-  </p>
-
+  <p class="hero-subtitle">Berbasis Dashboard Analitik — Gulf of Mexico</p>
   <p class="hero-desc">
     Analisis deskriptif tren produksi minyak offshore Amerika Serikat periode 2017–2024 menggunakan data resmi Bureau of Safety and Environmental Enforcement (BSEE) yang divisualisasikan melalui dashboard interaktif berbasis Microsoft Power BI.
   </p>
-
   <div class="hero-actions">
-    <a href="#dashboard" class="btn-primary">
-      ▶ Buka Dashboard
-    </a>
-
-    <a href="#about" class="btn-secondary">
-      Pelajari Lebih Lanjut
-    </a>
+    <a href="#dashboard" class="btn-primary"><span>▶</span> Buka Dashboard</a>
+    <a href="#about" class="btn-secondary">↓ Pelajari Lebih Lanjut</a>
   </div>
-
 </section>
 
-<!-- ABOUT -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-label">// TOTAL PRODUKSI MINYAK</div>
+    <div class="stat-value">4.95<span class="unit">bn bbl</span></div>
+    <div class="stat-sub">Gulf of Mexico 2017–2024</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">// TOTAL RECORD DATA</div>
+    <div class="stat-value">332<span class="unit">K</span></div>
+    <div class="stat-sub">Record produksi sumur</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">// RATA-RATA WATER CUT</div>
+    <div class="stat-value">31.57<span class="unit">%</span></div>
+    <div class="stat-sub">Avg per sumur aktif</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-label">// PERIODE DATA</div>
+    <div class="stat-value">8<span class="unit">yr</span></div>
+    <div class="stat-sub">Jan 2017 — Des 2024</div>
+  </div>
+</div>
 
 <section class="section" id="about">
-
-  <div class="section-tag">
-    // TENTANG PENELITIAN
+  <div class="section-tag">// TENTANG PENELITIAN</div>
+  <h2 class="section-title reveal">Analisis Deskriptif Tren<br>Produksi Minyak Offshore</h2>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Penelitian ini mengembangkan sebuah <strong>dashboard analitik berbasis data historis produksi minyak</strong> offshore di kawasan Gulf of Mexico, Amerika Serikat. Dashboard dirancang untuk memvisualisasikan tren produksi, distribusi per operator, dan perbandingan antar wilayah secara interaktif.</p>
+      <p>Data yang digunakan bersumber dari <strong>Bureau of Safety and Environmental Enforcement (BSEE)</strong>, lembaga pemerintah federal Amerika Serikat yang mewajibkan seluruh operator sumur minyak offshore untuk melaporkan data produksi bulanan melalui formulir OGOR-A (Oil and Gas Operations Report Part A).</p>
+      <p>Pendekatan analisis yang digunakan adalah <strong>analisis deskriptif</strong> dalam kerangka metodologi CRISP-DM, dengan pipeline data mulai dari pengunduhan, preprocessing menggunakan Python, penyimpanan di SQLite, hingga visualisasi di Microsoft Power BI.</p>
+    </div>
+    <div class="info-cards">
+      <div class="info-card">
+        <div class="info-card-icon">📊</div>
+        <div class="info-card-content">
+          <div class="info-card-title">SUMBER DATA</div>
+          <div class="info-card-text">BSEE OGOR-A (Oil and Gas Operations Report Part A) — data resmi pemerintah AS, tersedia publik di data.bsee.gov</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🗓️</div>
+        <div class="info-card-content">
+          <div class="info-card-title">CAKUPAN WAKTU</div>
+          <div class="info-card-text">Januari 2017 — Desember 2024 (8 tahun, granularitas bulanan per sumur)</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">🌍</div>
+        <div class="info-card-content">
+          <div class="info-card-title">WILAYAH</div>
+          <div class="info-card-text">Gulf of Mexico — Outer Continental Shelf (OCS), termasuk area GC, MC, WD, ST, GB dan lainnya</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-icon">⚙️</div>
+        <div class="info-card-content">
+          <div class="info-card-title">TEKNOLOGI</div>
+          <div class="info-card-text">Python (pandas) → SQLite → Microsoft Power BI → Power BI Service</div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <h2 class="section-title">
-    Analisis Deskriptif Tren<br>
-    Produksi Minyak Offshore
-  </h2>
-
-  <p class="hero-desc">
-    Dashboard ini dibuat untuk memvisualisasikan tren produksi minyak offshore Gulf of Mexico menggunakan data resmi BSEE OGOR-A 2017–2024 melalui Power BI.
-  </p>
-
 </section>
 
-<!-- DASHBOARD -->
+<div class="section-divider"></div>
 
-<section class="dashboard-section" id="dashboard">
-
-  <div class="section-tag">
-    // LIVE DASHBOARD
+<section class="section" id="parameter">
+  <div class="section-tag">// PARAMETER YANG DIMONITOR</div>
+  <h2 class="section-title reveal">Indikator Kritis<br>Produksi Sumur Minyak</h2>
+  <div class="param-grid reveal">
+    <div class="param-card">
+      <div class="param-num">// 01</div>
+      <div class="param-name">OIL PRODUCTION RATE</div>
+      <div class="param-formula">Satuan: bbl/bulan</div>
+      <div class="param-desc">Volume minyak yang diproduksi per bulan dari setiap sumur. Indikator utama kinerja sumur dan target produksi operator.</div>
+    </div>
+    <div class="param-card">
+      <div class="param-num">// 02</div>
+      <div class="param-name">WATER CUT</div>
+      <div class="param-formula">WC = Air / (Air + Minyak) × 100%</div>
+      <div class="param-desc">Persentase air dalam total fluida produksi. Nilai tinggi (&gt;80%) mengindikasikan penurunan performa reservoir.</div>
+    </div>
+    <div class="param-card">
+      <div class="param-num">// 03</div>
+      <div class="param-name">GAS-OIL RATIO</div>
+      <div class="param-formula">GOR = Gas (MCF) / Minyak (bbl)</div>
+      <div class="param-desc">Perbandingan volume gas terhadap minyak. Kenaikan drastis mengindikasikan gas coning atau perubahan kondisi reservoir.</div>
+    </div>
+    <div class="param-card">
+      <div class="param-num">// 04</div>
+      <div class="param-name">GAS PRODUCTION</div>
+      <div class="param-formula">Satuan: MCF/bulan</div>
+      <div class="param-desc">Volume associated gas yang diproduksi bersama minyak. Dipantau untuk efisiensi operasional dan kepatuhan regulasi flaring.</div>
+    </div>
+    <div class="param-card">
+      <div class="param-num">// 05</div>
+      <div class="param-name">WATER PRODUCTION</div>
+      <div class="param-formula">Satuan: bbl/bulan</div>
+      <div class="param-desc">Volume air formasi yang ikut terproduksi. Peningkatan signifikan mengindikasikan water breakthrough dari reservoir.</div>
+    </div>
+    <div class="param-card">
+      <div class="param-num">// 06</div>
+      <div class="param-name">ACTIVE WELLS</div>
+      <div class="param-formula">DISTINCTCOUNT per periode</div>
+      <div class="param-desc">Jumlah sumur aktif per periode. Tren penurunan mencerminkan proses decommissioning sumur-sumur mature di GoM.</div>
+    </div>
   </div>
 
-  <h2 class="section-title">
-    Interactive Production Monitoring Dashboard
-  </h2>
+  <div class="section-tag reveal">// PIPELINE DATA</div>
+  <div class="pipeline reveal">
+    <div class="pipeline-step">
+      <div class="pipeline-num">// 01</div>
+      <div class="pipeline-name">Download</div>
+      <div class="pipeline-tool">Browser</div>
+      <div class="pipeline-desc">8 file ZIP BSEE OGOR-A 2017–2024 dari data.bsee.gov</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">// 02</div>
+      <div class="pipeline-name">Extract</div>
+      <div class="pipeline-tool">Python zipfile</div>
+      <div class="pipeline-desc">Ekstrak 8 ZIP → 8 file .txt ASCII</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">// 03</div>
+      <div class="pipeline-name">Combine</div>
+      <div class="pipeline-tool">Python pandas</div>
+      <div class="pipeline-desc">Gabungkan → 722.708 baris raw data</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">// 04</div>
+      <div class="pipeline-name">Clean</div>
+      <div class="pipeline-tool">Python pandas</div>
+      <div class="pipeline-desc">Filter + cleaning → 332.148 record bersih</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">// 05</div>
+      <div class="pipeline-name">Store</div>
+      <div class="pipeline-tool">SQLite</div>
+      <div class="pipeline-desc">Simpan ke database bsee_production.db</div>
+    </div>
+    <div class="pipeline-step">
+      <div class="pipeline-num">// 06</div>
+      <div class="pipeline-name">Visualize</div>
+      <div class="pipeline-tool">Power BI</div>
+      <div class="pipeline-desc">Dashboard interaktif + publish to web</div>
+    </div>
+  </div>
+</section>
 
+<div class="section-divider"></div>
+
+<section class="dashboard-section" id="dashboard">
+  <div class="dashboard-label reveal">
+    <div class="dashboard-tag">// LIVE DASHBOARD</div>
+    <div class="dashboard-header">
+      <h2 class="dashboard-title">Interactive Production<br>Monitoring Dashboard</h2>
+      <div class="dashboard-meta">
+        <div class="meta-item">Source: <span>BSEE OGOR-A</span></div>
+        <div class="meta-item">Period: <span>2017 — 2024</span></div>
+        <div class="meta-item">Region: <span>Gulf of Mexico, USA</span></div>
+        <div class="meta-item">Tool: <span>Microsoft Power BI</span></div>
+      </div>
+    </div>
+  </div>
   <div class="dashboard-topbar">
-
     <div class="db-dots">
       <div class="db-dot"></div>
       <div class="db-dot"></div>
       <div class="db-dot"></div>
     </div>
-
-    <div class="db-url">
-      app.powerbi.com/view —
-      <span>BSEE Gulf of Mexico Oil Production Monitor</span>
-    </div>
-
-    <div class="db-status">
-      ● LIVE
-    </div>
-
+    <div class="db-url">app.powerbi.com/view — <span>BSEE Gulf of Mexico Oil Production Monitor</span></div>
+    <div class="db-status">LIVE</div>
   </div>
-
   <div class="dashboard-embed-wrap">
-
+    <div class="pbi-header-mask"></div>
     <iframe
-      title="Power BI Dashboard"
-      loading="lazy"
-      allowfullscreen
-      src="https://app.powerbi.com/view?r=eyJrIjoiYmE3NzlmMTgtNjZiZS00NzExLTk5NzgtY2U2MDRlYzczNDhmIiwidCI6IjUzNjhlMmNkLThmMjMtNDFkMS04M2E1LTU0MDE5MjIyMTRjMiJ9&navContentPaneEnabled=false&filterPaneEnabled=false">
+      src="https://app.powerbi.com/view?r=eyJrIjoiYmE3NzlmMTgtNjZiZS00NzExLTk5NzgtY2U2MDRlYzczNDhmIiwidCI6IjUzNjhlMmNkLThmMjMtNDFkMS04M2E1LTU0MDE5MjIyMTRjMiJ9"
+      frameborder="0"
+      allowFullScreen="true">
     </iframe>
-
+    <div class="pbi-footer-mask"></div>
   </div>
-
 </section>
 
-<!-- METODOLOGI -->
+<div class="section-divider"></div>
 
 <section class="section" id="metodologi">
-
-  <div class="section-tag">
-    // METODOLOGI
+  <div class="section-tag">// METODOLOGI</div>
+  <h2 class="section-title reveal">CRISP-DM Framework</h2>
+  <div class="method-grid reveal">
+    <div class="method-step">
+      <div class="method-step-num">// 01</div>
+      <div class="method-step-name">Business Understanding</div>
+      <div class="method-step-desc">Memahami konteks bisnis BSEE dan kebutuhan monitoring produksi offshore GoM</div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">// 02</div>
+      <div class="method-step-name">Data Understanding</div>
+      <div class="method-step-desc">Eksplorasi 332K record OGOR-A: 16 atribut, 8 tahun, format ASCII</div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">// 03</div>
+      <div class="method-step-name">Data Preparation</div>
+      <div class="method-step-desc">Download, ekstrak, dan gabungkan 8 file ZIP ke satu dataset</div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">// 04</div>
+      <div class="method-step-name">Data Cleaning</div>
+      <div class="method-step-desc">Filter, hapus duplikasi, kalkulasi WC & GOR, simpan ke SQLite</div>
+    </div>
+    <div class="method-step">
+      <div class="method-step-num">// 05</div>
+      <div class="method-step-name">Modeling</div>
+      <div class="method-step-desc">Analisis deskriptif: trend analysis, statistik agregasi, DAX measures</div>
+    </div>
+    <div class="method-step" style="border-right:none">
+      <div class="method-step-num">// 06</div>
+      <div class="method-step-name">Visualization</div>
+      <div class="method-step-desc">Dashboard Power BI: KPI cards, line charts, bar charts, slicer filter</div>
+    </div>
   </div>
-
-  <h2 class="section-title">
-    CRISP-DM Framework
-  </h2>
-
-  <p class="hero-desc">
-    Penelitian menggunakan metode CRISP-DM mulai dari business understanding, data preparation, data cleaning, hingga visualisasi dashboard interaktif.
-  </p>
-
 </section>
 
-<!-- FOOTER -->
-
 <footer>
-
-  <div>
-    <div class="footer-title">
-      DASHBOARD MONITORING PRODUKSI MINYAK
-    </div>
-
+  <div class="footer-left">
+    <div class="footer-title">DASHBOARD MONITORING PRODUKSI MINYAK</div>
     <div class="footer-text">
-      Peneliti: Anindya Agnatama<br>
-      Program Studi: Sistem Informasi<br>
-      Universitas Gunadarma<br>
-      Tahun: 2026
+      Peneliti: <span>Anindya Agnatama</span><br>
+      Program Studi: <span>Sistem Informasi</span><br>
+      Universitas: <span>Universitas Gunadarma</span><br>
+      Tahun: <span>2026</span>
     </div>
   </div>
-
-  <div>
+  <div class="footer-right">
     <div class="footer-badge">DATA SOURCE: BSEE.GOV</div>
     <div class="footer-badge">TOOL: MICROSOFT POWER BI</div>
     <div class="footer-badge">METHOD: CRISP-DM</div>
+    <div class="footer-copy">
+      Data bersumber dari Bureau of Safety and Environmental Enforcement (BSEE)<br>
+      U.S. Department of the Interior — Public Domain Data
+    </div>
   </div>
-
 </footer>
 
-<!-- SCROLL ACTIVE NAV -->
-
 <script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
-
 window.addEventListener('scroll', () => {
-
   let current = '';
-
   sections.forEach(section => {
-
-    const sectionTop = section.offsetTop - 120;
-
-    if(window.scrollY >= sectionTop){
-      current = section.getAttribute('id');
-    }
-
+    if (window.scrollY >= section.offsetTop - 100) current = section.getAttribute('id');
   });
-
   navLinks.forEach(link => {
-
-    link.style.color =
-      link.getAttribute('href') === '#' + current
-      ? '#00d9ff'
-      : '#c8d7e6';
-
+    link.style.color = link.getAttribute('href') === '#' + current ? 'var(--accent)' : 'var(--text2)';
   });
-
 });
-
 </script>
+
+<script>
+// Fix PBI iframe scroll — prevent pinch zoom & scroll hijack
+(function() {
+  var wrap = document.querySelector('.dashboard-embed-wrap');
+  if (!wrap) return;
+
+  // Prevent wheel zoom (ctrl+scroll)
+  wrap.addEventListener('wheel', function(e) {
+    if (e.ctrlKey) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, { passive: false });
+
+  // Prevent pinch zoom on touch
+  wrap.addEventListener('touchstart', function(e) {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  wrap.addEventListener('touchmove', function(e) {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  // Prevent gesturechange (Safari)
+  wrap.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
+  wrap.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
+})();
+</script>
+
+  <!-- biar ga zoom in zoom out pas scrolling -->
+  
+  <style>
+    .dashboard-embed-wrap iframe {
+      pointer-events: none;
+    }
+    .dashboard-embed-wrap:hover iframe{
+      pointer-events: auto;
+    }
+  </style>
+  
 
 </body>
 </html>
+
+
+betulin html nya ini dulu dong kasih aku bersi bersih nya yang udah kamu revisi 
