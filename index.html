@@ -23,9 +23,19 @@
     <li><a href="#metodologi">Metodologi</a></li>
   </ul>
   <div class="nav-badge">BSEE GOF MEXICO 2017–2024</div>
+  <button class="nav-mobile-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
+<div class="nav-drawer" id="navDrawer">
+  <a href="#about" onclick="closeMenu()">Tentang</a>
+  <a href="#parameter" onclick="closeMenu()">Parameter</a>
+  <a href="#dashboard" onclick="closeMenu()">Dashboard</a>
+  <a href="#temuan" onclick="closeMenu()">Temuan</a>
+  <a href="#metodologi" onclick="closeMenu()">Metodologi</a>
+</div>
+
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
@@ -45,7 +55,6 @@
   </div>
 </section>
 
-<!-- STATS BAR -->
 <div class="stats-bar">
   <div class="stat-item">
     <div class="stat-label">// TOTAL PRODUKSI MINYAK</div>
@@ -69,14 +78,13 @@
   </div>
 </div>
 
-<!-- ABOUT -->
 <section class="section" id="about">
   <div class="section-tag">// TENTANG PENELITIAN</div>
   <h2 class="section-title reveal">Analisis Deskriptif Tren<br>Produksi Minyak Offshore</h2>
   <div class="about-grid reveal">
     <div class="about-text">
       <p>Penelitian ini mengembangkan sebuah <strong>dashboard analitik berbasis data historis produksi minyak</strong> offshore di kawasan Gulf of Mexico, Amerika Serikat. Dashboard dirancang untuk memvisualisasikan tren produksi, distribusi per operator, dan perbandingan antar wilayah secara interaktif.</p>
-      <p>Data yang digunakan bersumber dari <strong>Bureau of Safety and Environmental Enforcement (BSEE)</strong>, lembaga pemerintah federal Amerika Serikat yang mewajibkan seluruh operator sumur minyak offshore untuk melaporkan data produksi bulanan melalui formulir OGOR-A (Oil and Gas Operations Report Part A).</p>
+      <p>Data yang digunakan bersumber dari <strong>Bureau of Safety and Environmental Enforcement (BSEE)</strong>, lembaga pemerintah federal Amerika Serikat yang mewajibkan seluruh operator sumur minyak offshore untuk melaporkan data produksi bulanan melalui formulir OGOR-A.</p>
       <p>Pendekatan analisis yang digunakan adalah <strong>analisis deskriptif</strong> dalam kerangka metodologi CRISP-DM, dengan pipeline data mulai dari pengunduhan, preprocessing menggunakan Python, penyimpanan di SQLite, hingga visualisasi di Microsoft Power BI.</p>
     </div>
     <div class="info-cards">
@@ -84,7 +92,7 @@
         <div class="info-card-icon">📊</div>
         <div class="info-card-content">
           <div class="info-card-title">SUMBER DATA</div>
-          <div class="info-card-text">BSEE OGOR-A (Oil and Gas Operations Report Part A) — data resmi pemerintah AS, tersedia publik di data.bsee.gov</div>
+          <div class="info-card-text">BSEE OGOR-A — data resmi pemerintah AS, tersedia publik di data.bsee.gov</div>
         </div>
       </div>
       <div class="info-card">
@@ -98,7 +106,7 @@
         <div class="info-card-icon">🌍</div>
         <div class="info-card-content">
           <div class="info-card-title">WILAYAH</div>
-          <div class="info-card-text">Gulf of Mexico — Outer Continental Shelf (OCS), termasuk area GC, MC, WD, ST, GB dan lainnya</div>
+          <div class="info-card-text">Gulf of Mexico — Outer Continental Shelf (OCS)</div>
         </div>
       </div>
       <div class="info-card">
@@ -114,7 +122,6 @@
 
 <div class="section-divider"></div>
 
-<!-- PARAMETER -->
 <section class="section" id="parameter">
   <div class="section-tag">// PARAMETER YANG DIMONITOR</div>
   <h2 class="section-title reveal">Indikator Kritis<br>Produksi Sumur Minyak</h2>
@@ -123,37 +130,37 @@
       <div class="param-num">// 01</div>
       <div class="param-name">OIL PRODUCTION RATE</div>
       <div class="param-formula">Satuan: bbl/bulan</div>
-      <div class="param-desc">Volume minyak yang diproduksi per bulan dari setiap sumur. Indikator utama kinerja sumur dan target produksi operator.</div>
+      <div class="param-desc">Volume minyak yang diproduksi per bulan dari setiap sumur.</div>
     </div>
     <div class="param-card">
       <div class="param-num">// 02</div>
       <div class="param-name">WATER CUT</div>
       <div class="param-formula">WC = Air / (Air + Minyak) × 100%</div>
-      <div class="param-desc">Persentase air dalam total fluida produksi. Nilai tinggi (&gt;80%) mengindikasikan penurunan performa reservoir.</div>
+      <div class="param-desc">Persentase air dalam total fluida produksi.</div>
     </div>
     <div class="param-card">
       <div class="param-num">// 03</div>
       <div class="param-name">GAS-OIL RATIO</div>
       <div class="param-formula">GOR = Gas (MCF) / Minyak (bbl)</div>
-      <div class="param-desc">Perbandingan volume gas terhadap minyak. Kenaikan drastis mengindikasikan gas coning atau perubahan kondisi reservoir.</div>
+      <div class="param-desc">Perbandingan volume gas terhadap minyak.</div>
     </div>
     <div class="param-card">
       <div class="param-num">// 04</div>
       <div class="param-name">GAS PRODUCTION</div>
       <div class="param-formula">Satuan: MCF/bulan</div>
-      <div class="param-desc">Volume associated gas yang diproduksi bersama minyak. Dipantau untuk efisiensi operasional dan kepatuhan regulasi flaring.</div>
+      <div class="param-desc">Volume associated gas yang diproduksi bersama minyak.</div>
     </div>
     <div class="param-card">
       <div class="param-num">// 05</div>
       <div class="param-name">WATER PRODUCTION</div>
       <div class="param-formula">Satuan: bbl/bulan</div>
-      <div class="param-desc">Volume air formasi yang ikut terproduksi. Peningkatan signifikan mengindikasikan water breakthrough dari reservoir.</div>
+      <div class="param-desc">Volume air formasi yang ikut terproduksi.</div>
     </div>
     <div class="param-card">
       <div class="param-num">// 06</div>
       <div class="param-name">ACTIVE WELLS</div>
       <div class="param-formula">DISTINCTCOUNT per periode</div>
-      <div class="param-desc">Jumlah sumur aktif per periode. Tren penurunan mencerminkan proses decommissioning sumur-sumur mature di GoM.</div>
+      <div class="param-desc">Jumlah sumur aktif per periode.</div>
     </div>
   </div>
 
@@ -163,44 +170,43 @@
       <div class="pipeline-num">// 01</div>
       <div class="pipeline-name">Download</div>
       <div class="pipeline-tool">Browser</div>
-      <div class="pipeline-desc">8 file ZIP BSEE OGOR-A 2017–2024 dari data.bsee.gov</div>
+      <div class="pipeline-desc">8 file ZIP BSEE OGOR-A 2017–2024</div>
     </div>
     <div class="pipeline-step">
       <div class="pipeline-num">// 02</div>
       <div class="pipeline-name">Extract</div>
       <div class="pipeline-tool">Python zipfile</div>
-      <div class="pipeline-desc">Ekstrak 8 ZIP → 8 file .txt ASCII</div>
+      <div class="pipeline-desc">Ekstrak 8 ZIP → 8 file .txt</div>
     </div>
     <div class="pipeline-step">
       <div class="pipeline-num">// 03</div>
       <div class="pipeline-name">Combine</div>
       <div class="pipeline-tool">Python pandas</div>
-      <div class="pipeline-desc">Gabungkan → 722.708 baris raw data</div>
+      <div class="pipeline-desc">Gabungkan → 722.708 baris</div>
     </div>
     <div class="pipeline-step">
       <div class="pipeline-num">// 04</div>
       <div class="pipeline-name">Clean</div>
       <div class="pipeline-tool">Python pandas</div>
-      <div class="pipeline-desc">Filter + cleaning → 332.148 record bersih</div>
+      <div class="pipeline-desc">Filter → 332.148 record bersih</div>
     </div>
     <div class="pipeline-step">
       <div class="pipeline-num">// 05</div>
       <div class="pipeline-name">Store</div>
       <div class="pipeline-tool">SQLite</div>
-      <div class="pipeline-desc">Simpan ke database bsee_production.db</div>
+      <div class="pipeline-desc">Simpan ke database</div>
     </div>
     <div class="pipeline-step">
       <div class="pipeline-num">// 06</div>
       <div class="pipeline-name">Visualize</div>
       <div class="pipeline-tool">Power BI</div>
-      <div class="pipeline-desc">Dashboard interaktif + publish to web</div>
+      <div class="pipeline-desc">Dashboard + publish to web</div>
     </div>
   </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- DASHBOARD -->
 <section class="dashboard-section" id="dashboard">
   <div class="dashboard-label reveal">
     <div class="dashboard-tag">// LIVE DASHBOARD</div>
@@ -224,85 +230,64 @@
     <div class="db-status">LIVE</div>
   </div>
   <div class="dashboard-embed-wrap">
-    <div class="pbi-header-mask"></div>
     <iframe
+      title="BSEE Gulf of Mexico Oil Production Dashboard"
       src="https://app.powerbi.com/view?r=eyJrIjoiYmE3NzlmMTgtNjZiZS00NzExLTk5NzgtY2U2MDRlYzczNDhmIiwidCI6IjUzNjhlMmNkLThmMjMtNDFkMS04M2E1LTU0MDE5MjIyMTRjMiJ9&navContentPaneEnabled=false&filterPaneEnabled=false"
       frameborder="0"
-      allowFullScreen="true">
+      allowFullScreen="true"
+      loading="lazy">
     </iframe>
-    <div class="pbi-footer-mask"></div>
   </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- TEMUAN & KESIMPULAN -->
 <section class="section" id="temuan">
   <div class="section-tag">// TEMUAN & KESIMPULAN</div>
   <h2 class="section-title reveal">Insight dari Data<br>Produksi GoM 2017–2024</h2>
 
   <div class="finding-grid reveal">
-
     <div class="finding-card">
       <div class="finding-num">// 01</div>
       <div class="finding-name">Penurunan 2020 Bukan Semata Karena COVID</div>
-      <div class="finding-body">
-        Produksi turun di 2020, namun water cut ikut turun di periode yang sama. Jika penurunan murni karena demand shock, water cut seharusnya tidak berubah. Data menunjukkan operator secara selektif men-shut-in sumur dengan water cut tertinggi terlebih dahulu — bukan mengurangi semua sumur secara merata. Ini strategi efisiensi, bukan sekadar respons pandemi.
-      </div>
+      <div class="finding-body">Produksi turun di 2020, namun water cut ikut turun di periode yang sama. Data menunjukkan operator secara selektif men-shut-in sumur dengan water cut tertinggi terlebih dahulu — strategi efisiensi, bukan sekadar respons pandemi.</div>
       <div class="finding-tag">Strategi Operasional</div>
     </div>
-
     <div class="finding-card">
       <div class="finding-num">// 02</div>
       <div class="finding-name">Konsentrasi Produksi di Dua Operator Teratas</div>
-      <div class="finding-body">
-        Shell Offshore (0.97bn bbl) dan BP Exploration (0.71bn bbl) bersama-sama mengontrol hampir 40% total produksi GoM. Konsentrasi ini mencerminkan risiko struktural — gangguan operasional atau regulasi pada satu operator berdampak signifikan terhadap output kawasan secara keseluruhan.
-      </div>
+      <div class="finding-body">Shell Offshore (0.97bn bbl) dan BP Exploration (0.71bn bbl) bersama-sama mengontrol hampir 40% total produksi GoM, mencerminkan risiko struktural konsentrasi operator.</div>
       <div class="finding-tag">Risiko Konsentrasi</div>
     </div>
-
     <div class="finding-card">
       <div class="finding-num">// 03</div>
       <div class="finding-name">Efisiensi Per Sumur Meningkat Meski Jumlah Sumur Turun</div>
-      <div class="finding-body">
-        Jumlah sumur aktif menurun sepanjang 2017–2024, namun total produksi relatif stabil. Artinya produksi per sumur aktif justru meningkat — industri GoM sedang dalam fase konsolidasi efisiensi. Operator membuang sumur tidak produktif dan mengkonsentrasikan sumber daya pada sumur high-yield.
-      </div>
+      <div class="finding-body">Jumlah sumur aktif menurun, namun total produksi relatif stabil — produksi per sumur aktif justru meningkat, menandakan fase konsolidasi efisiensi industri.</div>
       <div class="finding-tag">Efisiensi Industri</div>
     </div>
-
     <div class="finding-card">
       <div class="finding-num">// 04</div>
       <div class="finding-name">GOR Anomali 2020 Mengindikasikan Intervensi Reservoir</div>
-      <div class="finding-body">
-        Gas-Oil Ratio melonjak tajam di 2020 lalu turun drastis — pola yang tidak terjadi secara alami. Lonjakan ini kemungkinan besar merupakan efek dari gas injection untuk pressure maintenance di periode harga minyak rendah, atau perubahan komposisi sumur aktif akibat selektivitas shut-in.
-      </div>
+      <div class="finding-body">Gas-Oil Ratio melonjak tajam di 2020 lalu turun drastis — kemungkinan efek gas injection untuk pressure maintenance di periode harga minyak rendah.</div>
       <div class="finding-tag">Anomali Reservoir</div>
     </div>
-
     <div class="finding-card">
       <div class="finding-num">// 05</div>
       <div class="finding-name">Deepwater Mendominasi — MC807 sebagai Bukti</div>
-      <div class="finding-body">
-        Area MC807 (Mississippi Canyon, kedalaman >1000m) memproduksi 0.56bn bbl — jauh melampaui area lain. Dominasi ini mengkonfirmasi bahwa masa depan produksi GoM ada di segmen deepwater, bukan pada shelf dangkal yang sudah memasuki fase mature dan declining.
-      </div>
+      <div class="finding-body">Area MC807 (Mississippi Canyon, kedalaman >1000m) memproduksi 0.56bn bbl, mengkonfirmasi masa depan produksi GoM ada di segmen deepwater.</div>
       <div class="finding-tag">Tren Deepwater</div>
     </div>
-
     <div class="finding-card finding-card--conclusion">
       <div class="finding-num">// KESIMPULAN</div>
       <div class="finding-name">Implikasi untuk Industri Migas</div>
-      <div class="finding-body">
-        GoM 2017–2024 menunjukkan transisi dari ekspansi kuantitas ke optimasi kualitas. Industri bergerak menuju fewer wells, higher efficiency, dan deeper water. Dashboard ini membuktikan bahwa data operasional publik dapat menghasilkan insight strategis — bukan sekadar laporan angka — ketika dianalisis dengan pendekatan yang tepat.
-      </div>
+      <div class="finding-body">GoM 2017–2024 menunjukkan transisi dari ekspansi kuantitas ke optimasi kualitas — fewer wells, higher efficiency, deeper water.</div>
       <div class="finding-tag">Kesimpulan Strategis</div>
     </div>
-
   </div>
 </section>
 
 <div class="section-divider"></div>
 
-<!-- METODOLOGI -->
 <section class="section" id="metodologi">
   <div class="section-tag">// METODOLOGI</div>
   <h2 class="section-title reveal">CRISP-DM Framework</h2>
@@ -340,7 +325,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-left">
     <div class="footer-title">DASHBOARD MONITORING PRODUKSI MINYAK</div>
@@ -363,6 +347,20 @@
 </footer>
 
 <script>
+function toggleMenu() {
+  document.getElementById('navDrawer').classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('navDrawer').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+  const d = document.getElementById('navDrawer');
+  const b = document.getElementById('menuBtn');
+  if (d && b && !d.contains(e.target) && !b.contains(e.target)) {
+    d.classList.remove('open');
+  }
+});
+
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -381,22 +379,6 @@ window.addEventListener('scroll', () => {
     link.style.color = link.getAttribute('href') === '#' + current ? 'var(--accent)' : 'var(--text2)';
   });
 });
-
-(function() {
-  var wrap = document.querySelector('.dashboard-embed-wrap');
-  if (!wrap) return;
-  wrap.addEventListener('wheel', function(e) {
-    if (e.ctrlKey) { e.preventDefault(); e.stopPropagation(); }
-  }, { passive: false });
-  wrap.addEventListener('touchstart', function(e) {
-    if (e.touches.length > 1) e.preventDefault();
-  }, { passive: false });
-  wrap.addEventListener('touchmove', function(e) {
-    if (e.touches.length > 1) e.preventDefault();
-  }, { passive: false });
-  wrap.addEventListener('gesturestart', function(e) { e.preventDefault(); }, { passive: false });
-  wrap.addEventListener('gesturechange', function(e) { e.preventDefault(); }, { passive: false });
-})();
 </script>
 
 </body>
