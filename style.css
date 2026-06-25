@@ -459,7 +459,7 @@ nav {
   margin: 0;
   background: var(--dark);
   border-bottom: 1px solid var(--border);
-  /* NO overflow hidden — lets iframe breathe */
+  overflow: hidden;
 }
 
 .dashboard-embed-wrap iframe {
@@ -469,11 +469,25 @@ nav {
   min-height: 700px;
   max-height: 1000px;
   border: none;
-  /* Remove transform/scale — let browser handle native sizing */
 }
 
-.pbi-header-mask { display: none; }
-.pbi-footer-mask { display: none; }
+/* Cover Power BI's own white toolbar (top) and zoom bar (bottom) */
+.pbi-mask {
+  position: absolute;
+  left: 0;
+  right: 0;
+  background: var(--dark);
+  z-index: 5;
+  pointer-events: none;
+}
+.pbi-mask-top {
+  top: 0;
+  height: 42px;
+}
+.pbi-mask-bottom {
+  bottom: 0;
+  height: 38px;
+}
 
 /* ── TEMUAN ── */
 .finding-grid {
