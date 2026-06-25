@@ -383,7 +383,7 @@ nav {
 
 /* ── KEY CALLOUT ── */
 .dashboard-callout {
-  padding: 28px 80px;
+  padding: 28px 80px 16px;
   font-family: var(--font-head);
   font-size: clamp(18px, 2.4vw, 26px);
   font-weight: 500;
@@ -584,7 +584,7 @@ footer {
   .method-step:nth-child(6) { border-top: 1px solid var(--border); border-right: none; }
   .dashboard-label { padding: 48px 40px 24px; }
   .dashboard-guide { padding: 14px 40px; }
-  .dashboard-callout { margin: 0 40px; padding: 24px 40px; }
+  .dashboard-callout { margin: 0 40px; padding: 24px 40px 14px; }
   .dashboard-footnote { padding: 24px 40px 48px; }
   .dashboard-topbar { padding: 10px 40px; }
   .dashboard-embed-wrap iframe { height: 80vh; min-height: 600px; }
@@ -630,7 +630,7 @@ footer {
   .guide-text { font-size: 12px; }
   .dashboard-callout {
     margin: 0 20px;
-    padding: 20px 20px;
+    padding: 20px 20px 12px;
     font-size: 17px;
     border-left-width: 2px;
   }
