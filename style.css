@@ -435,6 +435,7 @@ nav {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   background: var(--dark);
+  scroll-margin-top: 70px;
 }
 .db-dots { display: flex; gap: 6px; }
 .db-dot { width: 10px; height: 10px; border-radius: 50%; }
