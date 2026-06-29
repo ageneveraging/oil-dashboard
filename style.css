@@ -442,13 +442,14 @@ nav {
 .db-dot:nth-child(1) { background: #FF5F56; }
 .db-dot:nth-child(2) { background: #FFBD2E; }
 .db-dot:nth-child(3) { background: #27C93F; }
-.db-url { font-family: var(--font-mono); font-size: 11px; color: var(--text3); flex: 1; text-align: center; }
+.db-url { font-family: var(--font-mono); font-size: 11px; color: var(--text3); flex: 1; text-align: center; min-width: 0; }
 .db-url span { color: var(--accent2); }
 
 .db-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 .db-interactive {
   display: flex;
@@ -456,18 +457,20 @@ nav {
   gap: 5px;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--text3);
+  color: var(--accent2);
+  background: rgba(0, 255, 136, 0.08);
+  padding: 4px 10px;
+  border-radius: 4px;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  transition: color 0.2s;
+  transition: background 0.2s;
 }
 .db-interactive:hover {
-  color: var(--accent);
+  background: rgba(0, 255, 136, 0.14);
 }
 .db-interactive-icon {
-  color: var(--accent);
+  color: var(--accent2);
   flex-shrink: 0;
-  opacity: 0.85;
 }
 
 .db-status {
