@@ -442,14 +442,12 @@ nav {
 .db-dot:nth-child(1) { background: #FF5F56; }
 .db-dot:nth-child(2) { background: #FFBD2E; }
 .db-dot:nth-child(3) { background: #27C93F; }
-.db-url { font-family: var(--font-mono); font-size: 11px; color: var(--text3); flex: 1; text-align: center; min-width: 0; }
+.db-url { font-family: var(--font-mono); font-size: 11px; color: var(--text3); flex: 1; text-align: center; }
 .db-url span { color: var(--accent2); }
-
 .db-right {
   display: flex;
   align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
+  gap: 16px;
 }
 .db-interactive {
   display: flex;
@@ -457,22 +455,19 @@ nav {
   gap: 5px;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--accent2);
-  background: rgba(0, 255, 136, 0.08);
-  padding: 4px 10px;
-  border-radius: 4px;
+  color: var(--text3);
   letter-spacing: 0.02em;
   white-space: nowrap;
-  transition: background 0.2s;
+  transition: color 0.2s;
 }
 .db-interactive:hover {
-  background: rgba(0, 255, 136, 0.14);
+  color: var(--accent);
 }
 .db-interactive-icon {
-  color: var(--accent2);
+  color: var(--accent);
   flex-shrink: 0;
+  opacity: 0.85;
 }
-
 .db-status {
   font-family: var(--font-mono); font-size: 10px; color: var(--accent2);
   display: flex; align-items: center; gap: 6px;
@@ -667,11 +662,21 @@ footer {
   .footnote-item { font-size: 12px; }
   .dashboard-header { flex-direction: column; align-items: flex-start; gap: 16px; }
   .dashboard-meta { align-items: flex-start; }
-  .dashboard-topbar { padding: 8px 20px; }
-  .db-url { font-size: 9px; display: none; }
-.db-right { gap: 8px; }
-.db-interactive { font-size: 0; padding: 5px; gap: 0; }
-.db-interactive-icon { width: 12px; height: 12px; }
+  .dashboard-topbar {
+    padding: 10px 20px;
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+  .db-url {
+    font-size: 9px;
+    order: 3;
+    flex: 1 1 100%;
+    text-align: left;
+    padding-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+  .db-right { gap: 10px; }
+  .db-interactive-icon { width: 13px; height: 13px; }
   .dashboard-embed-wrap iframe {
     height: 70vh;
     min-height: 480px;
