@@ -453,19 +453,21 @@ nav {
 .db-interactive {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   font-family: var(--font-mono);
   font-size: 10px;
-  color: var(--accent);
-  border: 1px solid var(--border2);
-  padding: 3px 9px;
-  border-radius: 20px;
+  color: var(--text3);
   letter-spacing: 0.02em;
   white-space: nowrap;
+  transition: color 0.2s;
+}
+.db-interactive:hover {
+  color: var(--accent);
 }
 .db-interactive-icon {
   color: var(--accent);
   flex-shrink: 0;
+  opacity: 0.85;
 }
 
 .db-status {
