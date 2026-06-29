@@ -444,6 +444,30 @@ nav {
 .db-dot:nth-child(3) { background: #27C93F; }
 .db-url { font-family: var(--font-mono); font-size: 11px; color: var(--text3); flex: 1; text-align: center; }
 .db-url span { color: var(--accent2); }
+
+.db-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.db-interactive {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent);
+  border: 1px solid var(--border2);
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.db-interactive-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
 .db-status {
   font-family: var(--font-mono); font-size: 10px; color: var(--accent2);
   display: flex; align-items: center; gap: 6px;
@@ -639,7 +663,10 @@ footer {
   .dashboard-header { flex-direction: column; align-items: flex-start; gap: 16px; }
   .dashboard-meta { align-items: flex-start; }
   .dashboard-topbar { padding: 8px 20px; }
-  .db-url { font-size: 9px; }
+  .db-url { font-size: 9px; display: none; }
+.db-right { gap: 8px; }
+.db-interactive { font-size: 0; padding: 5px; gap: 0; }
+.db-interactive-icon { width: 12px; height: 12px; }
   .dashboard-embed-wrap iframe {
     height: 70vh;
     min-height: 480px;
