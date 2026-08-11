@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<!-- navbar atas, logo + menu + badge periode data -->
 <nav>
   <div class="nav-logo">
     <div class="nav-logo-icon"></div>
@@ -28,6 +29,7 @@
   </button>
 </nav>
 
+<!-- drawer buat menu pas di hp, muncul pas hamburger diklik -->
 <div class="nav-drawer" id="navDrawer">
   <a href="#about" onclick="closeMenu()">Tentang</a>
   <a href="#parameter" onclick="closeMenu()">Parameter</a>
@@ -36,6 +38,7 @@
   <a href="#metodologi" onclick="closeMenu()">Metodologi</a>
 </div>
 
+<!-- hero, halaman awal pas landing -->
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
@@ -55,6 +58,7 @@
   </div>
 </section>
 
+<!-- 4 angka ringkasan di bawah hero -->
 <div class="stats-bar">
   <div class="stat-item">
     <div class="stat-label">// TOTAL PRODUKSI MINYAK</div>
@@ -78,6 +82,7 @@
   </div>
 </div>
 
+<!-- section tentang penelitian, teks kiri + card info kanan -->
 <section class="section" id="about">
   <div class="section-tag">// TENTANG PENELITIAN</div>
   <h2 class="section-title reveal">Analisis Deskriptif Tren<br>Produksi Minyak Offshore</h2>
@@ -122,6 +127,7 @@
 
 <div class="section-divider"></div>
 
+<!-- section parameter yang dimonitor + alur pipeline data -->
 <section class="section" id="parameter">
   <div class="section-tag">// PARAMETER YANG DIMONITOR</div>
   <h2 class="section-title reveal">Indikator Kritis<br>Produksi Sumur Minyak</h2>
@@ -164,6 +170,7 @@
     </div>
   </div>
 
+  <!-- alur pipeline datanya, ditaro di section yang sama biar nyambung sama parameter di atas -->
   <div class="section-tag reveal">// PIPELINE DATA</div>
   <div class="pipeline reveal">
     <div class="pipeline-step">
@@ -207,6 +214,7 @@
 
 <div class="section-divider"></div>
 
+<!-- dashboard live, ini section paling penting soalnya embed power bi-nya -->
 <section class="dashboard-section" id="dashboard">
   <div class="dashboard-label reveal">
     <div class="dashboard-tag">// LIVE DASHBOARD</div>
@@ -225,6 +233,7 @@
     Produksi turun <strong>10.5%</strong> pada 2020 akibat pandemi dan perang harga minyak — namun pulih dan mencapai puncak <strong>661 juta bbl</strong> di tahun 2023.
   </div>
 
+  <!-- topbar palsu, biar dashboard-nya berasa kayak jendela app sendiri -->
   <div class="dashboard-topbar">
     <div class="db-dots">
       <div class="db-dot"></div>
@@ -242,6 +251,8 @@
       <div class="db-status">LIVE</div>
     </div>
   </div>
+
+  <!-- iframe power bi-nya, pbi-mask buat nutupin zoom bar bawaan yang putih -->
   <div class="dashboard-embed-wrap">
     <iframe
       title="BSEE Gulf of Mexico Oil Production Dashboard"
@@ -267,6 +278,7 @@
 
 <div class="section-divider"></div>
 
+<!-- section temuan/insight, 5 kartu + 1 kartu kesimpulan di akhir -->
 <section class="section" id="temuan">
   <div class="section-tag">// TEMUAN & KESIMPULAN</div>
   <h2 class="section-title reveal">Insight dari Data<br>Produksi GoM 2017–2024</h2>
@@ -313,6 +325,7 @@
 
 <div class="section-divider"></div>
 
+<!-- section metodologi, 6 tahap CRISP-DM -->
 <section class="section" id="metodologi">
   <div class="section-tag">// METODOLOGI</div>
   <h2 class="section-title reveal">CRISP-DM Framework</h2>
@@ -350,6 +363,7 @@
   </div>
 </section>
 
+<!-- footer, identitas peneliti + badge sumber data -->
 <footer>
   <div class="footer-left">
     <div class="footer-title">DASHBOARD MONITORING PRODUKSI MINYAK</div>
@@ -372,12 +386,14 @@
 </footer>
 
 <script>
+// buka/tutup menu drawer pas di hp
 function toggleMenu() {
   document.getElementById('navDrawer').classList.toggle('open');
 }
 function closeMenu() {
   document.getElementById('navDrawer').classList.remove('open');
 }
+// nutup drawer kalo klik di luar area menu
 document.addEventListener('click', function(e) {
   const d = document.getElementById('navDrawer');
   const b = document.getElementById('menuBtn');
@@ -386,6 +402,7 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// animasi fade-in pas section masuk viewport waktu scroll
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -393,6 +410,7 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+// highlight link nav sesuai section yang lagi keliatan
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
