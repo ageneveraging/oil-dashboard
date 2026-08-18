@@ -2,20 +2,34 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<!-- viewport wajib ada biar responsive-nya jalan -- tanpa ini hp bakal render
+     halaman ini kayak di layar desktop (asumsi lebar 980px) terus di-zoom out,
+     hasilnya teks jadi kecil semua. width=device-width bikin lebar viewport
+     ikut lebar layar hp aslinya -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BSEE Gulf of Mexico — Oil Production Monitoring Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<!-- 3 font dari google fonts: rajdhani buat judul (kesan tegas/teknikal),
+     ibm plex mono buat label/kode (kesan data), ibm plex sans buat body text -->
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- navbar atas, logo + menu + badge periode data -->
+<!-- posisinya fixed di css biar tetep nempel di atas pas discroll ke bawah,
+     jadi orang bisa loncat ke section lain kapan aja tanpa scroll ke atas dulu -->
 <nav>
   <div class="nav-logo">
+    <!-- ikon segitiga ini bukan gambar, dibentuk dari div kotak biasa
+         yang dipotong pake clip-path di css -->
     <div class="nav-logo-icon"></div>
     <span class="nav-logo-text">OIL<span>MONITOR</span></span>
   </div>
+  <!-- menu ini cuma keliatan di layar gede, di hp otomatis disembunyiin
+       lewat media query terus digantiin sama tombol hamburger di bawah --
+       hrefnya ngarah ke id section, dan scroll-behavior: smooth di css
+       bikin klik ini jadi scroll halus bukan loncat instan -->
   <ul class="nav-links">
     <li><a href="#about">Tentang</a></li>
     <li><a href="#parameter">Parameter</a></li>
@@ -24,13 +38,23 @@
     <li><a href="#metodologi">Metodologi</a></li>
   </ul>
   <div class="nav-badge">BSEE GOF MEXICO 2017–2024</div>
+  <!-- tombol hamburger, cuma nongol di layar sempit. 3 span di dalemnya
+       itu yang dibentuk jadi 3 garis horizontal lewat css, bukan icon font.
+       onclick manggil toggleMenu() di js paling bawah. aria-label buat
+       screen reader biar tau ini tombol menu -->
   <button class="nav-mobile-btn" id="menuBtn" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
 <!-- drawer buat menu pas di hp, muncul pas hamburger diklik -->
+<!-- ini elemen terpisah dari <nav>, sengaja diletakin sebagai sibling
+     langsung di bawahnya (bukan di dalem nav), posisinya fixed juga,
+     top: 60px pas di bawah navbar. defaultnya display:none di css,
+     baru muncul pas js nambahin class "open" -->
 <div class="nav-drawer" id="navDrawer">
+  <!-- tiap link dikasih closeMenu() juga, jadi begitu user pilih menu,
+       drawer-nya otomatis nutup -- gak nunggu ditutup manual -->
   <a href="#about" onclick="closeMenu()">Tentang</a>
   <a href="#parameter" onclick="closeMenu()">Parameter</a>
   <a href="#dashboard" onclick="closeMenu()">Dashboard</a>
@@ -39,10 +63,17 @@
 </div>
 
 <!-- hero, halaman awal pas landing -->
+<!-- min-height: 100vh di css bikin section ini penuh 1 layar pas awal buka -->
 <section class="hero">
+  <!-- 2 lingkaran blur radial-gradient ini murni dekorasi "glow" di belakang
+       teks, posisinya absolute nempel ke .hero yang relative -- teknik
+       biar dark theme keliatan futuristik tanpa perlu gambar -->
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
   <div class="hero-tag">PENULISAN ILMIAH — SISTEM INFORMASI — UNIVERSITAS GUNADARMA 2026</div>
+  <!-- judul dipecah jadi beberapa span biar tiap baris bisa dikasih warna
+       beda-beda (accent = cyan, accent2 = hijau) -- bukan 3 judul terpisah,
+       cuma 1 <h1> yang di dalemnya ada span berwarna -->
   <h1 class="hero-title">
     MONITORING<br>
     <span class="accent">PRODUKSI</span><br>
@@ -59,9 +90,13 @@
 </section>
 
 <!-- 4 angka ringkasan di bawah hero -->
+<!-- ini grid 4 kolom, tiap kolom dikasih border kanan buat misahin,
+     kecuali kolom terakhir (di css pake :last-child biar border-nya ilang) -->
 <div class="stats-bar">
   <div class="stat-item">
     <div class="stat-label">// TOTAL PRODUKSI MINYAK</div>
+    <!-- angka & satuan dipisah span biar satuannya (bn bbl) bisa dikasih
+         ukuran font lebih kecil + warna beda dari angkanya -->
     <div class="stat-value">4.95<span class="unit">bn bbl</span></div>
     <div class="stat-sub">Gulf of Mexico 2017–2024</div>
   </div>
@@ -83,6 +118,9 @@
 </div>
 
 <!-- section tentang penelitian, teks kiri + card info kanan -->
+<!-- pake layout 2 kolom (about-grid, grid-template-columns: 1fr 1fr) --
+     kiri narasi panjang, kanan ringkasan cepat biar yang males baca
+     paragraf tetep dapet inti infonya -->
 <section class="section" id="about">
   <div class="section-tag">// TENTANG PENELITIAN</div>
   <h2 class="section-title reveal">Analisis Deskriptif Tren<br>Produksi Minyak Offshore</h2>
@@ -92,6 +130,7 @@
       <p>Data yang digunakan bersumber dari <strong>Bureau of Safety and Environmental Enforcement (BSEE)</strong>, lembaga pemerintah federal Amerika Serikat yang mewajibkan seluruh operator sumur minyak offshore untuk melaporkan data produksi bulanan melalui formulir OGOR-A.</p>
       <p>Pendekatan analisis yang digunakan adalah <strong>analisis deskriptif</strong> dalam kerangka metodologi CRISP-DM, dengan pipeline data mulai dari pengunduhan, preprocessing menggunakan Python, penyimpanan di SQLite, hingga visualisasi di Microsoft Power BI.</p>
     </div>
+    <!-- 4 kartu info, tiap kartu ada ikon emoji + judul + text kecil -->
     <div class="info-cards">
       <div class="info-card">
         <div class="info-card-icon">📊</div>
@@ -131,6 +170,7 @@
 <section class="section" id="parameter">
   <div class="section-tag">// PARAMETER YANG DIMONITOR</div>
   <h2 class="section-title reveal">Indikator Kritis<br>Produksi Sumur Minyak</h2>
+  <!-- grid 3 kolom, 6 kartu parameter -->
   <div class="param-grid reveal">
     <div class="param-card">
       <div class="param-num">// 01</div>
@@ -171,6 +211,12 @@
   </div>
 
   <!-- alur pipeline datanya, ditaro di section yang sama biar nyambung sama parameter di atas -->
+  <!-- ini flexbox (bukan grid) soalnya cuma 1 baris & butuh flex:1 biar
+       tiap kotak lebar-nya sama rata otomatis. panah "→" di antara kotak
+       BUKAN elemen html, itu ::after di css yang dipasang ke semua
+       .pipeline-step KECUALI yang terakhir (pake :not(:last-child)) --
+       soalnya kotak terakhir (Visualize) gak butuh panah nyambung lagi,
+       kalo dipasang ke semua bakal ada panah nyasar di ujung kanan -->
   <div class="section-tag reveal">// PIPELINE DATA</div>
   <div class="pipeline reveal">
     <div class="pipeline-step">
@@ -234,6 +280,8 @@
   </div>
 
   <!-- topbar palsu, biar dashboard-nya berasa kayak jendela app sendiri -->
+  <!-- 3 titik warna ini niru tombol close/minimize/maximize ala macOS,
+       murni dekoratif doang gak ada fungsi klik -->
   <div class="dashboard-topbar">
     <div class="db-dots">
       <div class="db-dot"></div>
@@ -253,6 +301,16 @@
   </div>
 
   <!-- iframe power bi-nya, pbi-mask buat nutupin zoom bar bawaan yang putih -->
+  <!-- src ini url hasil "publish to web" dari power bi service, bisa
+       diakses publik tanpa login. parameter di belakang url:
+       - navContentPaneEnabled=false & filterPaneEnabled=false: nyembunyiin
+         panel navigasi & filter bawaan power bi (udah ada slicer sendiri
+         di dashboardnya jadi panel ini malah ganggu)
+       - fitToWidth=true: biar visual nyesuain lebar container (kesan responsif)
+       title wajib ada buat aksesibilitas (screen reader baca ini).
+       loading="lazy" bikin browser nunda muat iframe sampe elemen ini
+       deket ke area yang keliatan di layar -- iframe power bi lumayan berat
+       jadi ini bantu percepat load awal halaman -->
   <div class="dashboard-embed-wrap">
     <iframe
       title="BSEE Gulf of Mexico Oil Production Dashboard"
@@ -261,6 +319,17 @@
       allowFullScreen="true"
       loading="lazy">
     </iframe>
+    <!-- ini bagian paling tricky di seluruh project: power bi punya
+         zoom bar putih bawaan di bagian bawah embed yang gak bisa
+         dihilangin lewat parameter url resmi apapun, dan warnanya
+         nabrak sama tema gelap web ini. gak bisa juga diotak-atik
+         langsung soalnya isinya "punya orang lain" (cross-origin,
+         css kita gak bisa nembus ke dalem iframe). jadi solusinya
+         bukan ngilangin, tapi NUTUPIN dari luar -- div ini diposisiin
+         absolute pas di area zoom bar itu, warnanya disamain sama
+         background dark theme, z-index dinaikin biar nutup di atasnya.
+         parent-nya (.dashboard-embed-wrap) di css dikasih position:relative
+         biar div absolute ini punya acuan posisi yang bener -->
     <div class="pbi-mask pbi-mask-bottom"></div>
   </div>
 
@@ -279,6 +348,10 @@
 <div class="section-divider"></div>
 
 <!-- section temuan/insight, 5 kartu + 1 kartu kesimpulan di akhir -->
+<!-- grid 3 kolom, kartu terakhir dikasih class tambahan
+     "finding-card--conclusion" biar beda warna (border+bg hijau aksen)
+     dari 5 kartu temuan lainnya yang netral -- nunjukkin ini kesimpulan,
+     bukan sekedar temuan biasa -->
 <section class="section" id="temuan">
   <div class="section-tag">// TEMUAN & KESIMPULAN</div>
   <h2 class="section-title reveal">Insight dari Data<br>Produksi GoM 2017–2024</h2>
@@ -314,6 +387,7 @@
       <div class="finding-body">Area MC807 (Mississippi Canyon, kedalaman >1000m) memproduksi 0.56bn bbl, mengkonfirmasi masa depan produksi GoM ada di segmen deepwater.</div>
       <div class="finding-tag">Tren Deepwater</div>
     </div>
+    <!-- kartu kesimpulan, beda class -->
     <div class="finding-card finding-card--conclusion">
       <div class="finding-num">// KESIMPULAN</div>
       <div class="finding-name">Implikasi untuk Industri Migas</div>
@@ -326,6 +400,9 @@
 <div class="section-divider"></div>
 
 <!-- section metodologi, 6 tahap CRISP-DM -->
+<!-- grid 6 kolom sejajar, pola border kanan-nya sama kaya stats-bar
+     di atas (kecuali kolom terakhir) -- sengaja konsisten biar desainnya
+     gak berasa beda-beda antar section -->
 <section class="section" id="metodologi">
   <div class="section-tag">// METODOLOGI</div>
   <h2 class="section-title reveal">CRISP-DM Framework</h2>
@@ -355,6 +432,8 @@
       <div class="method-step-name">Modeling</div>
       <div class="method-step-desc">Analisis deskriptif: trend analysis, statistik agregasi, DAX measures</div>
     </div>
+    <!-- style="border-right:none" ini inline, sebenernya udah dihandle
+         juga sama :last-child di css, cadangan biar pasti ilang -->
     <div class="method-step" style="border-right:none">
       <div class="method-step-num">// 06</div>
       <div class="method-step-name">Visualization</div>
@@ -387,13 +466,26 @@
 
 <script>
 // buka/tutup menu drawer pas di hp
+// classList.toggle('open') itu pinter -- kalo class "open" belom ada,
+// ditambahin; kalo udah ada, dihapus. jadi 1 fungsi yang sama bisa
+// dipake buat buka DAN nutup, gak perlu bikin variabel terpisah buat
+// nyimpen status "lagi kebuka apa ketutup" soalnya statusnya udah
+// otomatis kebaca dari ada/gaknya class itu di html (di DOM)
 function toggleMenu() {
   document.getElementById('navDrawer').classList.toggle('open');
 }
 function closeMenu() {
   document.getElementById('navDrawer').classList.remove('open');
 }
+
 // nutup drawer kalo klik di luar area menu
+// pola "click outside to close" -- listener dipasang di document (elemen
+// paling luar), tiap ada klik di mana aja di halaman bakal dicek:
+// apa yang diklik (e.target) itu ada DI DALAM drawer atau DI DALAM
+// tombol hamburger? .contains() ngecek apakah suatu elemen adalah node
+// itu sendiri atau salah satu turunannya di DOM. kalo klik terjadi di
+// luar dua-duanya, baru drawer ditutup. pengecekan "d && b" di depan itu
+// guard clause biar gak error kalo elemennya somehow belom ada
 document.addEventListener('click', function(e) {
   const d = document.getElementById('navDrawer');
   const b = document.getElementById('menuBtn');
@@ -403,6 +495,16 @@ document.addEventListener('click', function(e) {
 });
 
 // animasi fade-in pas section masuk viewport waktu scroll
+// pake IntersectionObserver -- web api bawaan browser buat "ngawasin"
+// apakah elemen lagi keliatan di layar (viewport) atau nggak, tanpa
+// perlu ngitung posisi scroll manual. threshold: 0.1 artinya callback
+// baru kepanggil kalo minimal 10% tinggi elemen udah keliatan.
+// entry.isIntersecting = true kalo elemen LAGI keliatan -- kalo true,
+// class "visible" ditambahin ke elemen itu (entry.target), yang lalu
+// nge-trigger transition di css (dari opacity:0 translateY(30px) jadi
+// opacity:1 translateY(0)). ini lebih ringan drpd cara lama (listen
+// scroll + itung getBoundingClientRect manual tiap elemen) soalnya
+// jalan async di luar main thread, gak bikin reflow berkali-kali
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -411,6 +513,22 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // highlight link nav sesuai section yang lagi keliatan
+// ini "scroll spy" -- tiap kali event scroll kepanggil, semua section
+// dicek satu-satu, dan variabel "current" terus ditimpa sama id section
+// TERAKHIR yang posisi scroll sekarang (window.scrollY) udah ngelewatin
+// batas atasnya (section.offsetTop - 100, angka 100 itu toleransi
+// kira-kira setinggi navbar). karena loopnya urut dari section pertama
+// sampe terakhir dan current selalu ditimpa, abis loop selesai current
+// bakal isinya id section PALING BAWAH yang udah kelewat -- itu section
+// yang lagi aktif. abis dapet current, semua nav link dicek: kalo
+// hrefnya cocok sama #current, warnanya diganti jadi aksen (cyan),
+// kalo nggak jadi abu-abu netral lagi
+//
+// catatan: listener scroll ini belom di-throttle/debounce, jadi
+// kepanggil berkali-kali banget selama scroll. buat skala halaman ini
+// masih gapapa, tapi kalo mau lebih optimal bisa dibungkus pake
+// requestAnimationFrame biar cuma jalan pas browser emang siap render
+// ulang, gak numpuk kerjaan yang sia-sia
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll', () => {
