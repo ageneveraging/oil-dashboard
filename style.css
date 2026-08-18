@@ -1,3 +1,8 @@
+/* variabel warna & font global -- ini yang bikin maintenance gampang.
+   semua warna/font dipanggil pake var(--nama) di seluruh file, jadi
+   kalo mau ganti warna aksen misalnya, cukup ubah 1 baris di sini,
+   otomatis kesebar ke semua elemen yang makenya. gak perlu cari-cari
+   satu-satu di ratusan baris css */
 :root {
   --black: #080C10;
   --dark: #0D1117;
@@ -16,6 +21,15 @@
   --font-body: 'IBM Plex Sans', sans-serif;
 }
 
+/* reset dasar -- ilangin margin/padding bawaan browser yang beda-beda
+   tiap elemen (h1 punya margin default, ul punya padding default, dll)
+   biar layout full dikontrol sendiri lewat css, gak gantung sama default
+   browser yang gak konsisten.
+   box-sizing: border-box ngubah cara ngitung lebar elemen -- padding &
+   border JADI BAGIAN dari width yang udah ditentuin (bukan nambah lebar
+   total). default browser itu content-box, di mana width cuma ngitung
+   konten doang jadi padding+border bikin elemen lebih lebar dari yang
+   diset. border-box jauh lebih gampang diprediksi pas nyusun grid/flex */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
@@ -28,6 +42,11 @@ body {
 }
 
 /* grid background biar kesan teknikal */
+/* efek garis-garis tipis di seluruh background itu BUKAN gambar,
+   murni dari 2 linear-gradient yang ditumpuk (1 horizontal, 1 vertikal),
+   masing-masing 1px, diulang tiap 40px lewat background-size.
+   posisinya fixed + inset:0 biar nutup seluruh viewport, pointer-events:none
+   biar gak ganggu klik ke konten di atasnya (elemen ini murni visual doang) */
 body::before {
   content: '';
   position: fixed;
@@ -42,13 +61,17 @@ body::before {
 }
 
 /* navbar atas */
+/* position:fixed -- ini yang bikin navbar nempel terus di atas biarpun
+   discroll ke bawah, gak ikut kegeser sama konten. beda sama relative
+   yang tetep di alur normal, fixed itu keluar dari alur halaman sama
+   sekali dan nempel ke viewport */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* nyebar logo-menu-badge ke ujung kiri-kanan otomatis, gak perlu itung margin manual */
   padding: 0 40px;
   height: 60px;
   background: rgba(8, 12, 16, 0.95);
@@ -62,6 +85,10 @@ nav {
   border: 1.5px solid var(--accent);
   display: flex; align-items: center; justify-content: center;
 }
+/* ini yang bikin ikon logo jadi bentuk segitiga -- elemen aslinya kotak
+   biasa, tapi clip-path "motong" bagian luar 3 titik koordinat ini,
+   sisanya (yg di dalem garis potong) yang keliatan. polygon(x y, x y, x y)
+   bikin segitiga karena cuma 3 titik */
 .nav-logo-icon::before {
   content: '';
   width: 10px; height: 10px;
@@ -90,6 +117,9 @@ nav {
 }
 
 /* hamburger buat mobile, nav-links biasa disembunyiin di layar kecil */
+/* ini defaultnya disembunyiin (display:none), baru dimunculin di media
+   query mobile paling bawah -- kebalikan dari .nav-links yang defaultnya
+   keliatan terus disembunyiin pas mobile */
 .nav-mobile-btn {
   display: none;
   flex-direction: column;
@@ -108,6 +138,9 @@ nav {
   display: block;
 }
 
+/* panel drawer menu, defaultnya ketutup (display:none). class .open
+   (ditambahin/dihapus sama js pas toggleMenu() dipanggil) yang ngubah
+   jadi display:flex biar keliatan */
 .nav-drawer {
   display: none;
   position: fixed;
@@ -133,12 +166,16 @@ nav {
 
 /* bagian hero, full screen pas awal buka web */
 .hero {
-  position: relative; z-index: 1;
+  position: relative; z-index: 1; /* relative di sini jadi "acuan" buat 2 lingkaran glow di bawah yang absolute */
   min-height: 100vh;
   display: flex; flex-direction: column; justify-content: center;
   padding: 100px 80px 60px;
   overflow: hidden;
 }
+/* 2 lingkaran blur ini absolute, posisinya ngacu ke .hero (parent
+   terdekat yang position-nya bukan static) -- kalo .hero gak dikasih
+   relative, 2 lingkaran ini bakal "bingung" & ngacu ke viewport,
+   posisinya jadi kacau gak sesuai maksud */
 .hero-glow {
   position: absolute; width: 600px; height: 600px; border-radius: 50%;
   background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
@@ -149,6 +186,10 @@ nav {
   background: radial-gradient(circle, rgba(0,255,136,0.05) 0%, transparent 70%);
   bottom: 0; left: 200px; pointer-events: none;
 }
+/* animasi fadeUp dipake berulang di elemen-elemen hero, tiap elemen
+   dikasih animation-delay beda-beda (0.2s, 0.35s, 0.5s, dst di bawah)
+   biar munculnya berurutan satu-satu, bukan bareng semua sekaligus --
+   lihat @keyframes fadeUp di paling bawah file */
 .hero-tag {
   font-family: var(--font-mono); font-size: 11px;
   color: var(--accent); letter-spacing: 0.15em;
@@ -156,6 +197,11 @@ nav {
   opacity: 0; animation: fadeUp 0.6s ease forwards 0.2s;
 }
 .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+/* clamp(min, preferred, max) -- ukuran font otomatis nyesuain lebar layar
+   (6vw = 6% lebar viewport) tapi dibatasin gak boleh lebih kecil dari
+   42px dan gak boleh lebih gede dari 80px. ini "fluid typography" --
+   font-nya nyesuain HALUS/nerus ngikutin lebar layar, bukan loncat
+   tiba-tiba pas nyampe breakpoint tertentu kaya kalo cuma pake media query */
 .hero-title {
   font-family: var(--font-head);
   font-size: clamp(42px, 6vw, 80px); font-weight: 700;
@@ -180,6 +226,10 @@ nav {
   display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
   opacity: 0; animation: fadeUp 0.6s ease forwards 0.8s;
 }
+/* clip-path di sini bukan bentuk segitiga kaya logo, tapi motong pojok
+   kanan-atas doang (5 titik koordinat) -- hasilnya tombol keliatan
+   "kepotong miring" di 1 sudut, khas desain tech/futuristik, tanpa
+   perlu gambar svg terpisah */
 .btn-primary {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: var(--font-head); font-size: 15px; font-weight: 600;
@@ -199,6 +249,8 @@ nav {
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
 /* baris angka2 statistik di bawah hero */
+/* grid 4 kolom sama rata (repeat(4,1fr) = 4 kolom, masing2 dpt jatah
+   sama besar dari sisa ruang yang ada) */
 .stats-bar {
   position: relative; z-index: 1;
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -209,9 +261,14 @@ nav {
 }
 .stat-item {
   padding: 24px 40px; border-right: 1px solid var(--border);
-  position: relative; overflow: hidden;
+  position: relative; overflow: hidden; /* relative jadi acuan buat garis aksen ::before di bawah */
 }
+/* border kanan dipasang ke SEMUA kolom di rule atas, terus khusus
+   kolom terakhir border-nya dihapus lewat :last-child -- soalnya abis
+   kolom terakhir gak perlu ada garis pemisah lagi */
 .stat-item:last-child { border-right: none; }
+/* garis aksen kecil di kiri, defaultnya transparan (opacity:0), baru
+   keliatan (opacity:1) pas di-hover -- transition bikin munculnya halus */
 .stat-item::before {
   content: ''; position: absolute; top: 0; left: 0;
   width: 3px; height: 100%; background: var(--accent);
@@ -237,6 +294,10 @@ nav {
   letter-spacing: 0.15em; color: var(--accent2); margin-bottom: 16px;
   display: flex; align-items: center; gap: 10px;
 }
+/* garis kecil sebelum label section (misal sebelum tulisan
+   "// TENTANG PENELITIAN") -- ini pseudo-element ::before, bukan elemen
+   html beneran. keuntungannya html tetep bersih (gak perlu nambah div
+   kosong cuma buat garis dekorasi), semua urusan visual full di css */
 .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent2); }
 .section-title {
   font-family: var(--font-head);
@@ -245,6 +306,8 @@ nav {
 }
 
 /* section tentang penelitian, 2 kolom kiri teks kanan card info */
+/* grid 2 kolom sama lebar -- ini kasus butuh 2 DIMENSI (baris & kolom)
+   makanya grid, bukan flex (flex lebih cocok buat 1 arah aja) */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
 .about-text p { font-size: 15px; line-height: 1.9; color: var(--text2); margin-bottom: 20px; }
 .about-text p strong { color: var(--white); font-weight: 500; }
@@ -272,6 +335,11 @@ nav {
   background: var(--panel); border: 1px solid var(--border);
   padding: 28px 24px; position: relative; overflow: hidden; transition: all 0.3s;
 }
+/* garis bawah yang muncul dari kiri ke kanan pas di-hover -- trik-nya
+   pake transform: scaleX(0) (garisnya "diciutin" jadi lebar 0 di awal),
+   transform-origin: left biar nyiutnya dari sisi kiri, terus pas hover
+   di-scaleX(1) balik ke lebar normal -- keliatan kaya garis "narik" dari
+   kiri ke kanan, padahal sebenernya cuma di-scale, bukan animasi width */
 .param-card::after {
   content: ''; position: absolute; bottom: 0; left: 0;
   width: 100%; height: 2px;
@@ -290,17 +358,22 @@ nav {
 .param-desc { font-size: 13px; color: var(--text2); line-height: 1.7; }
 
 /* alur pipeline data, kartu2 nyambung pake panah -> */
+/* flex (bukan grid) soalnya cuma 1 baris & butuh perilaku "flex" yaitu
+   tiap step ngisi ruang yang tersisa secara merata */
 .pipeline {
   display: flex; align-items: stretch; gap: 0;
-  margin-bottom: 60px; overflow-x: auto;
+  margin-bottom: 60px; overflow-x: auto; /* biar bisa discroll horizontal di layar sempit kalo kepotong */
   -webkit-overflow-scrolling: touch;
 }
 .pipeline-step {
-  flex: 1; min-width: 140px;
+  flex: 1; min-width: 140px; /* flex:1 bikin tiap kotak lebar sama rata otomatis, ngisi sisa ruang */
   background: var(--panel); border: 1px solid var(--border);
   padding: 24px 20px; position: relative; transition: border-color 0.2s;
 }
 .pipeline-step:hover { border-color: var(--accent); }
+/* panah "→" ini pseudo-element ::after, dipasang ke SEMUA pipeline-step
+   KECUALI yang terakhir (:not(:last-child)) -- soalnya kotak terakhir
+   (Visualize) gak ada kotak lanjutannya, jadi gak butuh panah nyambung */
 .pipeline-step:not(:last-child)::after {
   content: '→'; position: absolute; right: -14px; top: 50%; transform: translateY(-50%);
   font-family: var(--font-mono); font-size: 18px; color: var(--accent);
@@ -480,6 +553,10 @@ nav {
 }
 
 /* nah ini bagian penting -- wrapper buat nutupin toolbar putih bawaan power bi */
+/* position:relative WAJIB ada di sini -- ini yang jadi "acuan" buat
+   .pbi-mask di bawah yang absolute. kalo baris relative ini dihapus,
+   posisi mask bakal berantakan (ngacu ke elemen lain / viewport,
+   bukan ke wrapper iframe ini) */
 .dashboard-embed-wrap {
   position: relative;
   width: 100%;
@@ -499,6 +576,13 @@ nav {
 }
 
 /* nutup toolbar atas & zoom bar bawah punya power bi yang putih itu, ganggu banget kalo keliatan */
+/* teknik "masking" -- div ini gak beneran ngilangin elemen power bi
+   (gak bisa, itu punya iframe pihak ketiga, css kita gak bisa nembus
+   ke dalemnya karena cross-origin). solusinya nutupin SECARA VISUAL
+   pake div berwarna sama kaya background, ditumpuk paling atas
+   (z-index:5) tepat di posisi toolbar/zoom bar itu berada.
+   pointer-events:none biar klik tetep bisa "tembus" ke iframe di
+   bawahnya buat area yang bukan ditutup mask */
 .pbi-mask {
   position: absolute;
   left: 0;
@@ -528,6 +612,8 @@ nav {
   display: flex; flex-direction: column; gap: 10px;
 }
 .finding-card:hover { border-color: var(--accent); }
+/* class tambahan ini yang bikin kartu kesimpulan beda dari 5 kartu
+   temuan lain -- border & background jadi hijau aksen */
 .finding-card--conclusion {
   border-color: var(--accent2);
   background: rgba(0,255,136,0.03);
@@ -545,6 +631,8 @@ nav {
 .finding-card--conclusion .finding-tag { border-color: var(--accent2); color: var(--accent2); }
 
 /* grid 6 kotak buat tahapan metodologi (CRISP-DM) */
+/* pola border kanan yang sama kaya stats-bar -- semua kolom dikasih
+   border kanan, kolom terakhir di-:last-child biar border-nya ilang */
 .method-grid {
   display: grid; grid-template-columns: repeat(6, 1fr);
   gap: 0; border: 1px solid var(--border); margin-bottom: 60px; overflow: hidden;
@@ -571,14 +659,23 @@ footer {
 .footer-copy { font-family: var(--font-mono); font-size: 10px; color: var(--text3); text-align: right; line-height: 1.8; }
 
 /* animasi fade + pulse yang dipake di beberapa tempat */
+/* fadeUp: dari transparan+geser dikit ke bawah (translateY 20px),
+   menuju posisi normal + full opacity -- dipake di elemen-elemen hero */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+/* pulse: opacity naik-turun terus-terusan (infinite) -- dipake di titik
+   indikator "LIVE" biar keliatan berkedip halus */
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.3; }
 }
+/* class .reveal ini "kondisi tersembunyi" default (opacity:0, geser ke
+   bawah 30px). class .visible itu "kondisi keliatan" -- css cuma nyediain
+   2 kondisi ini + transition-nya (biar perubahannya halus 0.7s), tapi
+   KAPAN class .visible ditambahin itu tugas javascript (liat
+   IntersectionObserver di file js) */
 .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
@@ -586,6 +683,15 @@ footer {
 ::-webkit-scrollbar-track { background: var(--black); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* ===================================================
+   RESPONSIVE DESIGN
+   pendekatannya "desktop-first" -- style default di atas itu buat
+   layar gede, tiap @media (max-width: ...) di bawah ini NIMPA style
+   itu buat layar yang lebih kecil dari angka tsb. kebalikannya ada
+   "mobile-first" (default buat hp, terus @media min-width buat
+   layar gede) -- proyek ini pilih desktop-first
+=================================================== */
 
 /* responsive buat tablet ke bawah (maks 1024px) */
 @media (max-width: 1024px) {
@@ -616,6 +722,8 @@ footer {
 }
 
 /* responsive buat hp (maks 768px) -- paling banyak yang diubah soalnya layout desktop kepotong2 */
+/* di titik inilah nav-links disembunyiin & hamburger dimunculin --
+   breakpoint yang paling signifikan perubahannya */
 @media (max-width: 768px) {
   nav { padding: 0 16px; height: 52px; gap: 8px; }
   .nav-links { display: none; }
